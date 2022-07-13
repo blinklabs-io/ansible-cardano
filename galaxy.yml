@@ -1,0 +1,15 @@
+namespace: cloudstruct
+name: cardano_node
+version: 0.1.0
+readme: README.md
+authors:
+  - Andrew Gaffney <agaffney@cloudstruct.net>
+  - Chris Gianelloni <cgianelloni@cloudstruct.net>
+  - Jason Witkowski <jwitko@cloudstruct.net>
+description: Ansible playbooks and roles to install Cardano nodes of various types on both cloud and bare metal linux servers
+license:
+  - Apache-2.0
+tags:
+  - cardano
+  - cloudstruct
+repository: https://github.com/cloudstruct/cardano-node-ansible
