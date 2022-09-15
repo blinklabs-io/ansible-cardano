@@ -1,5 +1,5 @@
 namespace: cloudstruct
-name: cardano_node
+name: cardano
 version: 0.1.0
 readme: README.md
 authors:
@@ -12,4 +12,4 @@ license:
 tags:
   - cardano
   - cloudstruct
-repository: https://github.com/cloudstruct/cardano-node-ansible
+repository: https://github.com/cloudstruct/ansible-cardano

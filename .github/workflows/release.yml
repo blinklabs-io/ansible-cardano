@@ -44,7 +44,7 @@ jobs:
           tag_name: v${{ steps.cversion.outputs.version }}
           release_name: Release v${{ steps.cversion.outputs.version }}
           body: |
-            # Ansible Collection: cloudstruct.cardano_node
+            # Ansible Collection: cloudstruct.cardano
 
             Install with:
             ansible-galaxy collection install -r requirements.yml -f
@@ -52,7 +52,7 @@ jobs:
             The requirements.yml needs to have the following format and content:
             ---
             collections:
-                - https://github.com/cloudstruct/cardano-node-ansible/releases/download/v${{ steps.cversion.outputs.version }}/cloudstruct-cardano_node-${{ steps.cversion.outputs.version }}.tar.gz
+                - https://github.com/cloudstruct/ansible-cardano/releases/download/v${{ steps.cversion.outputs.version }}/cloudstruct-cardano-${{ steps.cversion.outputs.version }}.tar.gz
           draft: false
           prerelease: false
 
@@ -63,10 +63,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: cloudstruct-cardano_node-${{ steps.cversion.outputs.version }}.tar.gz
-          asset_name: cloudstruct-cardano_node-${{ steps.cversion.outputs.version }}.tar.gz
+          asset_path: cloudstruct-cardano-${{ steps.cversion.outputs.version }}.tar.gz
+          asset_name: cloudstruct-cardano-${{ steps.cversion.outputs.version }}.tar.gz
           asset_content_type: application/tar+gzip
 
       - name: Publish Ansible collection to Galaxy
-        run: ansible-galaxy collection publish cloudstruct-cardano_node-${{ steps.cversion.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXYDEV_API_KEY }} --server https://galaxy-dev.ansible.com/
-        #run: ansible-galaxy collection publish cloudstruct-cardano_node-${{ steps.cversion.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}
+        run: ansible-galaxy collection publish cloudstruct-cardano-${{ steps.cversion.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXYDEV_API_KEY }} --server https://galaxy-dev.ansible.com/
+        #run: ansible-galaxy collection publish cloudstruct-cardano-${{ steps.cversion.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}
