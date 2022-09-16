@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+docker run \
+	-i --rm \
+	--entrypoint cardano-cli \
+	-e CARDANO_NODE_SOCKET_PATH={{ cardano_node_ipc_container_dir }}/{{ cardano_node_socket_name }} \
+	-v {{ cardano_node_db_dir }}:{{ cardano_node_db_container_dir }} \
+	-v {{ cardano_node_ipc_dir }}:{{ cardano_node_ipc_container_dir }} \
+	{{ cardano_node_docker_image }} "$@"
