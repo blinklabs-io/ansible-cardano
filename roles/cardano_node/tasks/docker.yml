@@ -1,0 +1,22 @@
+---
+- name: Create cardano-cli wrapper for Docker
+  ansible.builtin.template:
+    src: cardano-cli.sh.j2
+    dest: '{{ cardano_node_docker_cli_script }}'
+    owner: '{{ cardano_node_user }}'
+    group: '{{ cardano_node_group }}'
+    mode: '0755'
+
+- name: Create container
+  docker_container:
+    name: '{{ cardano_node_docker_container_name }}'
+    image: '{{ cardano_node_docker_image }}'
+    restart_policy: unless-stopped
+    ports:
+      - '{{ cardano_node_port }}:{{ cardano_node_container_port }}'
+      - '{{ cardano_node_metrics_port }}:{{ cardano_node_metrics_container_port }}'
+    env:
+      NETWORK: '{{ cardano_node_network }}'
+    volumes:
+      - '{{ cardano_node_db_dir }}:{{ cardano_node_db_container_dir }}'
+      - '{{ cardano_node_ipc_dir }}:{{ cardano_node_ipc_container_dir }}'

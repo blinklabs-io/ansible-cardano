@@ -1,0 +1,44 @@
+---
+# Install method
+cardano_node_install_method: 'docker'
+
+# Cardano node version
+cardano_node_version: '1.35.3'
+
+# Base host directory for node data
+cardano_node_dir: /opt/cardano
+
+# DB directory for host/container
+cardano_node_db_dir: '{{ cardano_node_dir }}/db'
+cardano_node_db_container_dir: '/data/db'
+
+# IPC directory for host/container
+cardano_node_ipc_dir: '{{ cardano_node_dir }}/ipc'
+cardano_node_ipc_container_dir: '/ipc'
+
+# User/group for file/directory ownership
+cardano_node_user: root
+cardano_node_group: root
+
+# Docker image
+cardano_node_docker_image: 'ghcr.io/cloudstruct/cardano-node:{{ cardano_node_version }}'
+
+# Docker container name
+cardano_node_docker_container_name: cardano-node
+
+# Docker cardano-cli wrapper script location
+cardano_node_docker_cli_script: /usr/local/bin/cardano-cli
+
+# Port for host/container
+cardano_node_container_port: 3001
+cardano_node_port: '{{ cardano_node_container_port }}'
+
+# Metrics port for host/container
+cardano_node_metrics_container_port: 12798
+cardano_node_metrics_port: '{{ cardano_node_metrics_container_port }}'
+
+# Socket file name
+cardano_node_socket_name: node.socket
+
+# Cardano network
+cardano_node_network: mainnet
