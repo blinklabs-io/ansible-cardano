@@ -1,0 +1,24 @@
+---
+- name: Check install method
+  vars:
+    _allowed_install_methods: ['docker']
+  ansible.builtin.assert:
+    that:
+      - cardano_submit_api_install_method in _allowed_install_methods
+    fail_msg: 'The specified install method ({{ cardano_submit_api_install_method }}) is not one of the allowed values ({{ _allowed_install_methods | join(", ") }})'
+
+# We use the node owner and group
+- name: Create directories
+  ansible.builtin.file:
+    state: directory
+    path: '{{ item }}'
+    owner: '{{ cardano_node_user }}'
+    group: '{{ cardano_node_group }}'
+    mode: '0755'
+  loop:
+    - '{{ cardano_node_dir }}'
+    - '{{ cardano_node_ipc_dir }}'
+
+- name: Include docker-related tasks
+  ansible.builtin.include_tasks: docker.yml
+  when: cardano_submit_api_install_method == 'docker'
