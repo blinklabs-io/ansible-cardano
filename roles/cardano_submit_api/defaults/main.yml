@@ -1,0 +1,34 @@
+---
+# Install method
+cardano_submit_api_install_method: 'docker'
+
+# Cardano Submit API version
+cardano_submit_api_version: '0.7.0'
+
+# Base host directory for node data
+cardano_node_dir: /opt/cardano
+
+# IPC directory for host/container
+cardano_node_ipc_dir: '{{ cardano_node_dir }}/ipc'
+cardano_submit_api_ipc_container_dir: '/node-ipc'
+
+# User/group for file/directory ownership
+cardano_node_user: root
+cardano_node_group: root
+
+# Docker image
+cardano_submit_api_docker_image: 'ghcr.io/cloudstruct/cardano-submit-api:{{ cardano_submit_api_version }}'
+
+# Docker container name
+cardano_submit_api_docker_container_name: cardano-submit-api
+
+# Port for host/container
+cardano_submit_api_container_port: 8090
+cardano_submit_api_port: '{{ cardano_submit_api_container_port }}'
+
+# Metrics port for host/container
+cardano_submit_api_metrics_container_port: 8081
+cardano_submit_api_metrics_port: '{{ cardano_submit_api_metrics_container_port }}'
+
+# Cardano network
+cardano_submit_api_network: mainnet
