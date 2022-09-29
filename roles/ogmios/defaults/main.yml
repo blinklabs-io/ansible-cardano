@@ -1,0 +1,30 @@
+---
+# Install method
+ogmios_install_method: 'docker'
+
+# Ogmios version
+ogmios_version: '5.5.5'
+
+# Base host directory for node data
+cardano_node_dir: /opt/cardano
+
+# IPC directory for host/container
+cardano_node_ipc_dir: '{{ cardano_node_dir }}/ipc'
+ogmios_ipc_container_dir: '/node-ipc'
+
+# User/group for file/directory ownership
+cardano_node_user: root
+cardano_node_group: root
+
+# Docker image
+ogmios_docker_image: 'cardanosolutions/ogmios:v{{ ogmios_version }}-{{ ogmios_network }}'
+
+# Docker container name
+ogmios_docker_container_name: cardano-submit-api
+
+# Port for host/container
+ogmios_container_port: 1337
+ogmios_port: '{{ ogmios_container_port }}'
+
+# Cardano network
+ogmios_network: mainnet
