@@ -9,12 +9,12 @@ cardano_node_version: '1.35.3'
 cardano_node_dir: /opt/cardano
 
 # DB directory for host/container
-cardano_node_db_dir: '{{ cardano_node_dir }}/db'
-cardano_node_db_container_dir: '/data/db'
+cardano_node_db_dir: '{{ cardano_node_dir }}/data'
+cardano_node_db_container_dir: '{{ cardano_node_db_dir }}'
 
 # IPC directory for host/container
 cardano_node_ipc_dir: '{{ cardano_node_dir }}/ipc'
-cardano_node_ipc_container_dir: '/ipc'
+cardano_node_ipc_container_dir: '{{ cardano_node_ipc_dir }}'
 
 # User/group for file/directory ownership
 cardano_node_user: root
@@ -42,3 +42,6 @@ cardano_node_socket_name: node.socket
 
 # Cardano network
 cardano_node_network: mainnet
+
+# Topology
+cardano_node_topology_file: '{{ cardano_node_dir }}/config/{{ cardano_node_network }}-topology.json'
