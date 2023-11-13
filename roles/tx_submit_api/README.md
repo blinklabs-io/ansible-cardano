@@ -1,7 +1,7 @@
-ogmios
+tx_submit_api
 =========
 
-This role deploys an Ogmios instance.
+This role deploys a Tx Submit API instance.
 
 Requirements
 ------------
@@ -36,7 +36,7 @@ passed in as parameters) is always nice for users too:
     - hosts: servers
       tasks:
         - include_role:
-            name: blinklabs.cardano.ogmios
+            name: blinklabs.cardano.tx_submit_api
 ```
 
 License
@@ -47,4 +47,5 @@ Apache 2.0
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+An optional section for the role authors to include contact information, or a
+website (HTML is not allowed).
