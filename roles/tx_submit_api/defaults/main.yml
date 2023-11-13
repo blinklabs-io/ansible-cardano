@@ -1,0 +1,34 @@
+---
+# Install method
+tx_submit_api_install_method: 'docker'
+
+# Cardano Submit API version
+tx_submit_api_version: '0.14.6'
+
+# Base host directory for node data
+cardano_node_dir: /opt/cardano
+
+# IPC directory for host/container
+cardano_node_ipc_dir: '{{ cardano_node_dir }}/ipc'
+tx_submit_api_ipc_container_dir: '/node-ipc'
+
+# User/group for file/directory ownership
+cardano_node_user: root
+cardano_node_group: root
+
+# Docker image
+tx_submit_api_docker_image: 'ghcr.io/blinklabs-io/tx-submit-api:{{ tx_submit_api_version }}'
+
+# Docker container name
+tx_submit_api_docker_container_name: cardano-submit-api
+
+# Port for host/container
+tx_submit_api_container_port: 8090
+tx_submit_api_port: '{{ tx_submit_api_container_port }}'
+
+# Metrics port for host/container
+tx_submit_api_metrics_container_port: 8081
+tx_submit_api_metrics_port: '{{ tx_submit_api_metrics_container_port }}'
+
+# Cardano network
+tx_submit_api_network: mainnet

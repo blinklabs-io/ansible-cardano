@@ -3,7 +3,7 @@
 cardano_node_install_method: 'docker'
 
 # Cardano node version
-cardano_node_version: '1.35.3'
+cardano_node_version: '1.35.7'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
@@ -21,7 +21,7 @@ cardano_node_user: root
 cardano_node_group: root
 
 # Docker image
-cardano_node_docker_image: 'ghcr.io/cloudstruct/cardano-node:{{ cardano_node_version }}'
+cardano_node_docker_image: 'ghcr.io/blinklabs-io/cardano-node:{{ cardano_node_version }}'
 
 # Docker container name
 cardano_node_docker_container_name: cardano-node

@@ -1,3 +1,3 @@
-# Ansible Collection - cloudstruct.cardano
+# Ansible Collection - blinklabs.cardano
 
-Ansible playbooks and roles to install Cardano nodes of various types on both cloud and bare metal linux servers.
+Ansible playbooks and roles to install Cardano services of various types

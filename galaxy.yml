@@ -1,15 +1,14 @@
-namespace: cloudstruct
+namespace: blinklabs
 name: cardano
 version: 0.1.0
 readme: README.md
 authors:
-  - Andrew Gaffney <agaffney@cloudstruct.net>
-  - Chris Gianelloni <cgianelloni@cloudstruct.net>
-  - Jason Witkowski <jwitko@cloudstruct.net>
-description: Ansible playbooks and roles to install Cardano nodes of various types on both cloud and bare metal linux servers
+  - Aurora Gaffney <aurora@blinklabs.io>
+  - Chris Gianelloni <wolf31o2@blinklabs.io>
+description: Ansible playbooks and roles to install Cardano services of various types
 license:
   - Apache-2.0
 tags:
   - cardano
-  - cloudstruct
-repository: https://github.com/cloudstruct/ansible-cardano
+  - blinklabs
+repository: https://github.com/blinklabs-io/ansible-cardano
