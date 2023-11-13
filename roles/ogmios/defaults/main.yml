@@ -3,7 +3,7 @@
 ogmios_install_method: 'docker'
 
 # Ogmios version
-ogmios_version: '5.5.5'
+ogmios_version: '5.6.1'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
@@ -20,7 +20,7 @@ cardano_node_group: root
 ogmios_docker_image: 'cardanosolutions/ogmios:v{{ ogmios_version }}-{{ ogmios_network }}'
 
 # Docker container name
-ogmios_docker_container_name: cardano-submit-api
+ogmios_docker_container_name: ogmios
 
 # Port for host/container
 ogmios_container_port: 1337
