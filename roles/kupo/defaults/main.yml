@@ -1,0 +1,34 @@
+---
+# Install method
+kupo_install_method: 'docker'
+
+# Ogmios version
+kupo_version: '2.5.0'
+
+# Base host directory for node data
+cardano_node_dir: /opt/cardano
+
+# DB directory for host/container
+kupo_db_dir: '{{ cardano_node_dir }}/kupo'
+kupo_db_container_dir: '/db'
+
+# IPC directory for host/container
+cardano_node_ipc_dir: '{{ cardano_node_dir }}/ipc'
+kupo_ipc_container_dir: '/ipc'
+
+# User/group for file/directory ownership
+cardano_node_user: root
+cardano_node_group: root
+
+# Docker image
+kupo_docker_image: 'cardanosolutions/kupo:v{{ kupo_version }}'
+
+# Docker container name
+kupo_docker_container_name: kupo
+
+# Port for host/container
+kupo_container_port: 1337
+kupo_port: '{{ kupo_container_port }}'
+
+# Cardano network
+kupo_network: mainnet
