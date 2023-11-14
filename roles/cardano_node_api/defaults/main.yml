@@ -1,0 +1,34 @@
+---
+# Install method
+cardano_node_api_install_method: 'docker'
+
+# Cardano Submit API version
+cardano_node_api_version: 'main'
+
+# Base host directory for node data
+cardano_node_dir: /opt/cardano
+
+# IPC directory for host/container
+cardano_node_ipc_dir: '{{ cardano_node_dir }}/ipc'
+cardano_node_api_ipc_container_dir: '/node-ipc'
+
+# User/group for file/directory ownership
+cardano_node_user: root
+cardano_node_group: root
+
+# Docker image
+cardano_node_api_docker_image: 'ghcr.io/blinklabs-io/cardano-node-api:{{ cardano_node_api_version }}'
+
+# Docker container name
+cardano_node_api_docker_container_name: cardano-node-api
+
+# Port for host/container
+cardano_node_api_container_port: 8080
+cardano_node_api_port: '{{ cardano_node_api_container_port }}'
+
+# Metrics port for host/container
+cardano_node_api_metrics_container_port: 8081
+cardano_node_api_metrics_port: '{{ cardano_node_api_metrics_container_port }}'
+
+# Cardano network
+cardano_node_api_network: mainnet
