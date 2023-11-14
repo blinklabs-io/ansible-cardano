@@ -1,13 +1,13 @@
 ---
 - name: Create container
   docker_container:
-    name: '{{ cardano_submit_api_docker_container_name }}'
-    image: '{{ cardano_submit_api_docker_image }}'
+    name: '{{ tx_submit_api_docker_container_name }}'
+    image: '{{ tx_submit_api_docker_image }}'
     restart_policy: unless-stopped
     ports:
-      - '{{ cardano_submit_api_port }}:{{ cardano_submit_api_container_port }}'
-      - '{{ cardano_submit_api_metrics_port }}:{{ cardano_submit_api_metrics_container_port }}'
+      - '{{ tx_submit_api_port }}:{{ tx_submit_api_container_port }}'
+      - '{{ tx_submit_api_metrics_port }}:{{ tx_submit_api_metrics_container_port }}'
     env:
-      CARDANO_NETWORK: '{{ cardano_submit_api_network }}'
+      CARDANO_NETWORK: '{{ tx_submit_api_network }}'
     volumes:
-      - '{{ cardano_node_ipc_dir }}:{{ cardano_submit_api_ipc_container_dir }}'
+      - '{{ cardano_node_ipc_dir }}:{{ tx_submit_api_ipc_container_dir }}'

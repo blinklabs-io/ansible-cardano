@@ -20,7 +20,7 @@ cardano_node_group: root
 tx_submit_api_docker_image: 'ghcr.io/blinklabs-io/tx-submit-api:{{ tx_submit_api_version }}'
 
 # Docker container name
-tx_submit_api_docker_container_name: cardano-submit-api
+tx_submit_api_docker_container_name: tx-submit-api
 
 # Port for host/container
 tx_submit_api_container_port: 8090
