@@ -15,7 +15,6 @@
     group: '{{ cardano_node_group }}'
     mode: '0755'
   loop:
-    - '{{ cardano_node_dir }}'
     - '{{ cardano_node_db_dir }}'
     - '{{ cardano_node_ipc_dir }}'
 
