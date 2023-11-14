@@ -43,5 +43,8 @@ cardano_node_socket_name: node.socket
 # Cardano network
 cardano_node_network: mainnet
 
+# Config
+cardano_node_config_file: '{{ cardano_node_dir }}/config/{{ cardano_node_network }}-config.json'
+
 # Topology
 cardano_node_topology_file: '{{ cardano_node_dir }}/config/{{ cardano_node_network }}-topology.json'
