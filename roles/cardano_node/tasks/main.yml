@@ -7,6 +7,12 @@
       - cardano_node_install_method in _allowed_install_methods
     fail_msg: 'The specified install method ({{ cardano_node_install_method }}) is not one of the allowed values ({{ _allowed_install_methods | join(", ") }})'
 
+- name: Install chrony
+  package:
+    name: chrony
+    state: present
+  when: chrony_enabled
+
 - name: Create directories
   ansible.builtin.file:
     state: directory

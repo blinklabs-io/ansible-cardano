@@ -48,3 +48,6 @@ cardano_node_config_file: '{{ cardano_node_dir }}/config/{{ cardano_node_network
 
 # Topology
 cardano_node_topology_file: '{{ cardano_node_dir }}/config/{{ cardano_node_network }}-topology.json'
+
+# Install chrony
+chrony_enabled: true
