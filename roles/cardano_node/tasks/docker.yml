@@ -11,6 +11,8 @@
   docker_container:
     name: '{{ cardano_node_docker_container_name }}'
     image: '{{ cardano_node_docker_image }}'
+    command:
+      - run
     restart_policy: unless-stopped
     ports:
       - '{{ cardano_node_port }}:{{ cardano_node_container_port }}'
