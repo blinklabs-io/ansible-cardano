@@ -13,7 +13,7 @@
     state: present
   when: chrony_enabled
 
-- name: Create directories
+- name: Create directories for persistent data
   ansible.builtin.file:
     state: directory
     path: '{{ item }}'
@@ -23,6 +23,37 @@
   loop:
     - '{{ cardano_node_db_dir }}'
     - '{{ cardano_node_ipc_dir }}'
+
+- name: Create directories for topology
+  ansible.builtin.file:
+    state: directory
+    path: '{{ item }}'
+    owner: '{{ cardano_node_user }}'
+    group: '{{ cardano_node_group }}'
+    mode: '0755'
+  loop:
+    - '{{ cardano_node_topology_dir }}'
+  when: cardano_node_manage_topology
+
+- name: Generate custom topology config (legacy)
+  template:
+    dest: '{{ cardano_node_topology_file }}'
+    src: custom-topology.json.j2
+    owner: '{{ cardano_node_user }}'
+    group: '{{ cardano_node_group }}'
+    mode: 0644
+  register: cardano_topology
+  when: cardano_node_manage_topology and not cardano_node_p2p_enabled
+
+- name: Generate custom topology config (P2P)
+  template:
+    dest: '{{ cardano_node_topology_file }}'
+    src: custom-p2p-topology.json.j2
+    owner: '{{ cardano_node_user }}'
+    group: '{{ cardano_node_group }}'
+    mode: 0644
+  register: cardano_topology_p2p
+  when: cardano_node_manage_topology and cardano_node_p2p_enabled
 
 - name: Include docker-related tasks
   ansible.builtin.include_tasks: docker.yml

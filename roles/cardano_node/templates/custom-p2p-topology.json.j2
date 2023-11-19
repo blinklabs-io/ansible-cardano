@@ -1,0 +1,40 @@
+{
+  "localRoots": [
+{% set peer_count = cardano_node_topology_localroots | length %}
+{% for peer in cardano_node_topology_localroots %}
+    {
+      "accessPoints": [
+        {
+          "address": "{{ peer.address }}",
+          "port": {{ peer.port | int }}
+        }
+      ],
+      "advertise": false,
+      "valency": 1
+{% if loop.index == peer_count %}
+    }
+{% else %}
+    },
+{% endif %}
+{% endfor %}
+  ],
+  "publicRoots": [
+{% set peer_count = cardano_node_topology_publicroots | length %}
+{% for peer in cardano_node_topology_publicroots %}
+    {
+      "accessPoints": [
+        {
+          "address": "{{ peer.address }}",
+          "port": {{ peer.port | int }}
+        }
+      ],
+      "advertise": false,
+{% if loop.index == peer_count %}
+    }
+{% else %}
+    },
+{% endif %}
+{% endfor %}
+  ],
+  "useLedgerAfterSlot": {{ cardano_node_p2p_use_ledger_after }}
+}

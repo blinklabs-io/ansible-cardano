@@ -1,0 +1,16 @@
+{
+  "Producers": [
+{% set peer_count = (cardano_node_topology_localroots + cardano_node_topology_publicroots) | length %}
+{% for peer in (cardano_node_topology_localroots + cardano_node_topology_publicroots) %}
+    {
+      "address": "{{ peer.address }}",
+      "port": {{ peer.port }},
+      "valency": {{ peer.valency | default(1) }}
+{% if loop.index == peer_count %}
+    }
+{% else %}
+    },
+{% endif %}
+{% endfor %}
+  ]
+}

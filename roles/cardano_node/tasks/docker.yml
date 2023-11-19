@@ -7,6 +7,20 @@
     group: '{{ cardano_node_group }}'
     mode: '0755'
 
+- name: Initialize docker_volumes fact
+  set_fact:
+    docker_volumes: '{{ docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ cardano_node_ipc_dir }}:{{ cardano_node_ipc_container_dir }}'
+    - '{{ cardano_node_db_dir }}:{{ cardano_node_db_container_dir }}'
+
+- name: Add topology to docker_volumes fact
+  set_fact:
+    docker_volumes: '{{ docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ cardano_node_topology_file }}:{{ cardano_node_topology_file }}'
+  when: cardano_node_manage_topology
+
 - name: Create container
   docker_container:
     name: '{{ cardano_node_docker_container_name }}'
@@ -26,6 +40,4 @@
       CARDANO_RTS_OPTS: '{{ cardano_node_rts_flags }}'
       CARDANO_SOCKET_PATH: '{{ cardano_node_ipc_container_dir }}/{{ cardano_node_socket_name }}'
       CARDANO_TOPOLOGY: '{{ cardano_node_topology_file }}'
-    volumes:
-      - '{{ cardano_node_db_dir }}:{{ cardano_node_db_container_dir }}'
-      - '{{ cardano_node_ipc_dir }}:{{ cardano_node_ipc_container_dir }}'
+    volumes: '{{ docker_volumes | list }}'
