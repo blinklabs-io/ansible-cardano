@@ -2,8 +2,11 @@
 # Install method
 cardano_node_api_install_method: 'docker'
 
-# Cardano Submit API version
+# Cardano Node API version
 cardano_node_api_version: 'main'
+
+# Cardano network
+cardano_node_api_network: mainnet
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
@@ -23,12 +26,9 @@ cardano_node_api_docker_image: 'ghcr.io/blinklabs-io/cardano-node-api:{{ cardano
 cardano_node_api_docker_container_name: cardano-node-api
 
 # Port for host/container
-cardano_node_api_container_port: 8080
-cardano_node_api_port: '{{ cardano_node_api_container_port }}'
+cardano_node_api_port: 8080
+cardano_node_api_container_port: '{{ cardano_node_api_port }}'
 
 # Metrics port for host/container
-cardano_node_api_metrics_container_port: 8081
-cardano_node_api_metrics_port: '{{ cardano_node_api_metrics_container_port }}'
-
-# Cardano network
-cardano_node_api_network: mainnet
+cardano_node_api_metrics_port: 8081
+cardano_node_api_metrics_container_port: '{{ cardano_node_api_metrics_port }}'
