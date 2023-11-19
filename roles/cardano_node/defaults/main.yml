@@ -59,7 +59,15 @@ cardano_node_manage_config: false # this currently does nothing
 cardano_node_config_file: '{{ cardano_node_config_container_dir }}/{{ cardano_node_network }}-config.json'
 
 # Topology
+cardano_node_manage_topology: false
+cardano_node_p2p_enabled: '{{ false if cardano_node_network == "mainnet" else true }}'
+cardano_node_p2p_use_ledger_after: 84916732
 cardano_node_topology_file: '{{ cardano_node_topology_container_dir }}/{{ cardano_node_network }}-topology.json'
+cardano_node_topology_localroots: []
+cardano_node_topology_publicroots:
+  - address: 'relays-new.cardano-{{ cardano_node_network }}.iohk.io'
+    port: 3001
+    valency: 2 # this is only used for legacy topology
 
 # Install chrony
 chrony_enabled: true
