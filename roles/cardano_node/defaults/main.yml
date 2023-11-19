@@ -5,8 +5,15 @@ cardano_node_install_method: 'docker'
 # Cardano node version
 cardano_node_version: '1.35.7'
 
+# Cardano network
+cardano_node_network: mainnet
+
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
+
+# Config directory for host/container
+cardano_node_config_dir: '{{ cardano_node_dir }}/config'
+cardano_node_config_container_dir: '{{ cardano_node_config_dir }}'
 
 # DB directory for host/container
 cardano_node_db_dir: '{{ cardano_node_dir }}/data'
@@ -15,6 +22,10 @@ cardano_node_db_container_dir: '{{ cardano_node_db_dir }}'
 # IPC directory for host/container
 cardano_node_ipc_dir: '{{ cardano_node_dir }}/ipc'
 cardano_node_ipc_container_dir: '{{ cardano_node_ipc_dir }}'
+
+# Topology directory for host/container
+cardano_node_topology_dir: '{{ cardano_node_config_dir }}'
+cardano_node_topology_container_dir: '{{ cardano_node_topology_dir }}'
 
 # User/group for file/directory ownership
 cardano_node_user: root
@@ -40,14 +51,15 @@ cardano_node_metrics_port: '{{ cardano_node_metrics_container_port }}'
 # Socket file name
 cardano_node_socket_name: node.socket
 
-# Cardano network
-cardano_node_network: mainnet
+# RTS tuning
+cardano_node_rts_flags: '-N2 -A64m -I0 -qg -qb --disable-delayed-os-memory-return'
 
 # Config
-cardano_node_config_file: '{{ cardano_node_dir }}/config/{{ cardano_node_network }}-config.json'
+cardano_node_manage_config: false # this currently does nothing
+cardano_node_config_file: '{{ cardano_node_config_container_dir }}/{{ cardano_node_network }}-config.json'
 
 # Topology
-cardano_node_topology_file: '{{ cardano_node_dir }}/config/{{ cardano_node_network }}-topology.json'
+cardano_node_topology_file: '{{ cardano_node_topology_container_dir }}/{{ cardano_node_network }}-topology.json'
 
 # Install chrony
 chrony_enabled: true

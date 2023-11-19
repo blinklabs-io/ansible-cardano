@@ -23,6 +23,7 @@
       CARDANO_NETWORK: '{{ cardano_node_network }}'
       CARDANO_NODE_SOCKET_PATH: '{{ cardano_node_ipc_container_dir }}/{{ cardano_node_socket_name }}'
       CARDANO_PORT: '{{ cardano_node_port | string }}'
+      CARDANO_RTS_OPTS: '{{ cardano_node_rts_flags }}'
       CARDANO_SOCKET_PATH: '{{ cardano_node_ipc_container_dir }}/{{ cardano_node_socket_name }}'
       CARDANO_TOPOLOGY: '{{ cardano_node_topology_file }}'
     volumes:
