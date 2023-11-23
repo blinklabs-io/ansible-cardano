@@ -1,0 +1,18 @@
+---
+- name: Create container
+  docker_container:
+    name: '{{ cardano_db_sync_docker_container_name }}'
+    image: '{{ cardano_db_sync_docker_image }}'
+    restart_policy: unless-stopped
+    ports:
+      - '{{ cardano_db_sync_metrics_port }}:{{ cardano_db_sync_metrics_container_port }}'
+    env:
+      NETWORK: '{{ cardano_db_sync_network }}'
+      POSTGRES_HOST: '172.17.0.1'
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: 'cexplorer'
+      POSTGRES_USER: 'cexplorer'
+      POSTGRES_PASSWORD: 'cexplorer'
+    volumes:
+      - '{{ cardano_db_sync_state_dir }}:{{ cardano_db_sync_state_container_dir }}'
+      - '{{ cardano_node_ipc_dir }}:{{ cardano_db_sync_ipc_container_dir }}'

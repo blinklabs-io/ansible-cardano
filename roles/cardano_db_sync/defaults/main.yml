@@ -1,0 +1,34 @@
+---
+# Install method
+cardano_db_sync_install_method: 'docker'
+
+# Cardano DB Sync version
+cardano_db_sync_version: '13.1.1.3'
+
+# Base host directory for node data
+cardano_node_dir: /opt/cardano
+
+# DB directory for host/container
+cardano_db_sync_state_dir: '{{ cardano_node_dir }}/dbsync-state'
+cardano_db_sync_state_container_dir: '/var/lib/cexplorer'
+
+# IPC directory for host/container
+cardano_node_ipc_dir: '{{ cardano_node_dir }}/ipc'
+cardano_db_sync_ipc_container_dir: '/node-ipc'
+
+# User/group for file/directory ownership
+cardano_node_user: root
+cardano_node_group: root
+
+# Docker image
+cardano_db_sync_docker_image: 'ghcr.io/blinklabs-io/cardano-db-sync:{{ cardano_db_sync_version }}'
+
+# Docker container name
+cardano_db_sync_docker_container_name: cardano-db-sync
+
+# Metrics port for host/container
+cardano_db_sync_metrics_container_port: 8080
+cardano_db_sync_metrics_port: '{{ cardano_db_sync_metrics_container_port }}'
+
+# Cardano network
+cardano_db_sync_network: mainnet
