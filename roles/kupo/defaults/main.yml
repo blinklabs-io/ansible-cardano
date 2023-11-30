@@ -46,4 +46,4 @@ kupo_arguments:
   - --match '*'
   - --defer-db-indexes
   - --since origin
-  - --workdir ${KUPO_DATABASE_PATH}
+  - --workdir '{{ kupo_db_container_dir }}'

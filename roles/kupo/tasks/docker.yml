@@ -11,7 +11,6 @@
     kupo_docker_volumes: '{{ kupo_docker_volumes | default([]) + [item] }}'
   loop:
     - '{{ cardano_node_config_dir }}:{{ kupo_config_container_dir }}'
-      # when: cardano_node_manage_config
 
 - name: Create container
   docker_container:
@@ -19,21 +18,12 @@
     image: '{{ kupo_docker_image }}'
     restart_policy: unless-stopped
     command:
-      - kupo
-      - --node-socket ${CARDANO_NODE_SOCKET_PATH}
-      - --host ${LISTEN_HOST}
-      - --port ${LISTEN_PORT}
-      - --log-level ${LOG_LEVEL}
-      - --node-config ${CARDANO_CONFIG}
+      - --node-socket '{{ kupo_ipc_container_dir }}/{{ cardano_node_socket_name }}'
+      - --host 0.0.0.0
+      - --port '{{ kupo_container_port | string }}'
+      - --log-level Info
+      - --node-config '{{ kupo_config_file }}'
       - "{{ kupo_arguments | join(' ') }}"
     ports:
       - '{{ kupo_port }}:{{ kupo_container_port }}'
-    env:
-      CARDANO_CONFIG: '{{ kupo_config_file }}'
-      CARDANO_NODE_SOCKET_PATH: '{{ kupo_ipc_container_dir }}/{{ cardano_node_socket_name }}'
-      KUPO_DATABASE_PATH: '{{ kupo_db_container_dir }}'
-      KUPO_NETWORK: '{{ kupo_network }}'
-      LISTEN_HOST: 0.0.0.0
-      LISTEN_PORT: '{{ kupo_container_port | string }}'
-      LOG_LEVEL: Info
     volumes: '{{ kupo_docker_volumes | list }}'
