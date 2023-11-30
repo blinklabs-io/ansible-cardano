@@ -12,6 +12,10 @@ cardano_node_dir: /opt/cardano
 kupo_db_dir: '{{ cardano_node_dir }}/kupo'
 kupo_db_container_dir: '/db'
 
+# Config directory for host/container
+cardano_node_config_dir: '{{ cardano_node_dir }}/config'
+kupo_config_container_dir: '{{ cardano_node_config_dir }}'
+
 # IPC directory for host/container
 cardano_node_ipc_dir: '{{ cardano_node_dir }}/ipc'
 kupo_ipc_container_dir: '/ipc'
@@ -27,8 +31,19 @@ kupo_docker_image: 'cardanosolutions/kupo:v{{ kupo_version }}'
 kupo_docker_container_name: kupo
 
 # Port for host/container
-kupo_container_port: 1337
+kupo_container_port: 1442
 kupo_port: '{{ kupo_container_port }}'
 
 # Cardano network
 kupo_network: mainnet
+
+cardano_node_config_file: '{{ cardano_node_config_dir }}/{{ kupo_network }}-config.json'
+kupo_config_file: '{{ kupo_config_container_dir }}/{{ kupo_network }}-config.json'
+cardano_node_socket_name: node.socket
+
+# Kupo arguments (defaults to everything)
+kupo_arguments:
+  - --match '*'
+  - --defer-db-indexes
+  - --since origin
+  - --workdir ${KUPO_DATABASE_PATH}
