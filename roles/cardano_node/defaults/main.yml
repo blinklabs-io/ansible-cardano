@@ -55,7 +55,7 @@ cardano_node_socket_name: node.socket
 cardano_node_rts_flags: '-N2 -A64m -I0 -qg -qb --disable-delayed-os-memory-return'
 
 # Config
-cardano_node_manage_config: false # this currently does nothing
+cardano_node_manage_config: false # this currently controls mounting only
 cardano_node_config_file: '{{ cardano_node_config_container_dir }}/{{ cardano_node_network }}-config.json'
 
 # Topology
