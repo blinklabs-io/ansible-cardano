@@ -2,8 +2,8 @@
 # Install method
 kupo_install_method: 'docker'
 
-# Ogmios version
-kupo_version: '2.5.0'
+# Kupo version
+kupo_version: '2.5.1'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
