@@ -14,15 +14,43 @@ on:
       - galaxy.yml
 
 jobs:
-  releaseanddeploy:
+  create-draft-release:
+    runs-on: ubuntu-latest
+    outputs:
+      RELEASE_ID: ${{ steps.create-release.outputs.result }}
+    steps:
+      - run: "echo \"RELEASE_TAG=${GITHUB_REF#refs/tags/}\" >> $GITHUB_ENV"
+      - uses: actions/github-script@v6
+        id: create-release
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
+          script: |
+            try {
+              const response = await github.rest.repos.createRelease({
+                draft: true,
+                generate_release_notes: false,
+                name: process.env.RELEASE_TAG,
+                owner: context.repo.owner,
+                prerelease: false,
+                repo: context.repo.repo,
+                tag_name: process.env.RELEASE_TAG,
+              });
+
+              return response.data.id;
+            } catch (error) {
+              core.setFailed(error.message);
+            }
+
+  build-publish-collection:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: [3.9]
-
+    needs: [create-draft-release]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get current version
         id: cversion
@@ -42,15 +70,33 @@ jobs:
       - name: Build Ansible Collection
         run: ansible-galaxy collection build --force
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload release asset
+        run: |
+          _filename=blinklabs-cardano-${{ steps.cversion.outputs.version }}.tar.gz
+          curl \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/tar+gzip" \
+            --data-binary @${_filename} \
+            https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.create-draft-release.outputs.RELEASE_ID }}/assets?name=${_filename}
+
+      - name: Publish Ansible collection to Galaxy
+        run: ansible-galaxy collection publish blinklabs-cardano-${{ steps.cversion.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}
+
+  finalize-release:
+    runs-on: ubuntu-latest
+    needs: [create-draft-release, build-publish-collection]
+    steps:
+      - uses: actions/github-script@v6
         with:
-          tag_name: v${{ steps.cversion.outputs.version }}
-          release_name: Release v${{ steps.cversion.outputs.version }}
-          body: |
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            try {
+              await github.rest.repos.updateRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: ${{ needs.create-draft-release.outputs.RELEASE_ID }},
+                draft: false,
+                body: '
             # Ansible Collection: blinklabs.cardano
 
             Install with:
@@ -60,19 +106,8 @@ jobs:
             ---
             collections:
                 - https://github.com/blinklabs-io/ansible-cardano/releases/download/v${{ steps.cversion.outputs.version }}/blinklabs-cardano-${{ steps.cversion.outputs.version }}.tar.gz
-          draft: false
-          prerelease: false
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: blinklabs-cardano-${{ steps.cversion.outputs.version }}.tar.gz
-          asset_name: blinklabs-cardano-${{ steps.cversion.outputs.version }}.tar.gz
-          asset_content_type: application/tar+gzip
-
-      - name: Publish Ansible collection to Galaxy
-        run: ansible-galaxy collection publish blinklabs-cardano-${{ steps.cversion.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}
+            ',
+              });
+            } catch (error) {
+              core.setFailed(error.message);
+            }
