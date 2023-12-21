@@ -1,20 +1,27 @@
 ---
+- name: Initialize ogmios_docker_volumes fact
+  set_fact:
+    ogmios_docker_volumes: '{{ ogmios_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ cardano_node_ipc_dir }}:{{ ogmios_ipc_container_dir }}'
+
+- name: Add config to ogmios_docker_volumes fact
+  set_fact:
+    ogmios_docker_volumes: '{{ ogmios_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ cardano_node_config_dir }}:{{ ogmios_config_container_dir }}'
+
 - name: Create container
   docker_container:
     name: '{{ ogmios_docker_container_name }}'
     image: '{{ ogmios_docker_image }}'
     restart_policy: unless-stopped
     command:
-      - ogmios --node-socket ${CARDANO_NODE_SOCKET_PATH} --host ${LISTEN_HOST} --port ${LISTEN_PORT}
-        --log-level ${LOG_LEVEL} --node-config ${CARDANO_CONFIG}
+      - --node-socket '{{ ogmios_ipc_container_dir }}/{{ cardano_node_socket_name }}'
+      - --host 0.0.0.0
+      - --port '{{ ogmios_container_port | string }}'
+      - --log-level Info
+      - --node-config '{{ ogmios_config_file }}'
     ports:
       - '{{ ogmios_port }}:{{ ogmios_container_port }}'
-    env:
-      CARDANO_CONFIG: '{{ cardano_node_dir }}/config/{{ ogmios_network }}-config.json'
-      CARDANO_NODE_SOCKET_PATH: '{{ ogmios_ipc_container_dir }}'
-      LISTEN_HOST: 0.0.0.0
-      LISTEN_PORT: '{{ ogmios_container_port | string }}'
-      LOG_LEVEL: Info
-      OGMIOS_NETWORK: '{{ ogmios_network }}'
-    volumes:
-      - '{{ cardano_node_ipc_dir }}:{{ ogmios_ipc_container_dir }}'
+    volumes: '{{ ogmios_docker_volumes | list }}'
