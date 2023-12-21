@@ -13,7 +13,7 @@
       CARDANO_CONFIG: '{{ cardano_node_dir }}/config/{{ ogmios_network }}-config.json'
       CARDANO_NODE_SOCKET_PATH: '{{ ogmios_ipc_container_dir }}'
       LISTEN_HOST: 0.0.0.0
-      LISTEN_PORT: '{{ ogmios_container_port }}'
+      LISTEN_PORT: '{{ ogmios_container_port | string }}'
       LOG_LEVEL: Info
       OGMIOS_NETWORK: '{{ ogmios_network }}'
     volumes:
