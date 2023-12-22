@@ -29,7 +29,7 @@ jobs:
             try {
               const response = await github.rest.repos.createRelease({
                 draft: true,
-                generate_release_notes: false,
+                generate_release_notes: true,
                 name: process.env.RELEASE_TAG,
                 owner: context.repo.owner,
                 prerelease: false,
@@ -96,17 +96,6 @@ jobs:
                 repo: context.repo.repo,
                 release_id: ${{ needs.create-draft-release.outputs.RELEASE_ID }},
                 draft: false,
-                body: '
-            # Ansible Collection: blinklabs.cardano
-
-            Install with:
-            ansible-galaxy collection install -r requirements.yml -f
-
-            The requirements.yml needs to have the following format and content:
-            ---
-            collections:
-                - https://github.com/blinklabs-io/ansible-cardano/releases/download/v${{ steps.cversion.outputs.version }}/blinklabs-cardano-${{ steps.cversion.outputs.version }}.tar.gz
-            ',
               });
             } catch (error) {
               core.setFailed(error.message);
