@@ -1,0 +1,12 @@
+---
+- name: Create container
+  docker_container:
+    name: '{{ tx_submit_api_mirror_docker_container_name }}'
+    image: '{{ tx_submit_api_mirror_docker_image }}'
+    restart_policy: unless-stopped
+    ports:
+      - '{{ tx_submit_api_mirror_port }}:{{ tx_submit_api_mirror_container_port }}'
+      - '{{ tx_submit_api_mirror_metrics_port }}:{{ tx_submit_api_mirror_metrics_container_port }}'
+    env:
+      API_LISTEN_PORT: '{{ tx_submit_api_mirror_container_port | string }}'
+      BACKENDS: "{{ tx_submit_api_mirror_backends | join(',') }}"

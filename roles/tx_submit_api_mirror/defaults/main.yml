@@ -1,0 +1,24 @@
+---
+# Install method
+tx_submit_api_mirror_install_method: 'docker'
+
+# Cardano Submit API version
+tx_submit_api_mirror_version: '0.3.1'
+
+# Docker image
+tx_submit_api_mirror_docker_image: 'ghcr.io/blinklabs-io/tx-submit-api-mirror:{{ tx_submit_api_mirror_version }}'
+
+# Docker container name
+tx_submit_api_mirror_docker_container_name: tx-submit-api-mirror
+
+# Port for host/container
+tx_submit_api_mirror_container_port: 8090
+tx_submit_api_mirror_port: '{{ tx_submit_api_mirror_container_port }}'
+
+# Metrics port for host/container
+tx_submit_api_mirror_metrics_container_port: 8081
+tx_submit_api_mirror_metrics_port: '{{ tx_submit_api_mirror_metrics_container_port }}'
+
+# Backends to forward to
+tx_submit_api_mirror_backends:
+  - https://example.com/api/tx/submit
