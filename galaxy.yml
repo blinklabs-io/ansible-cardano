@@ -1,10 +1,11 @@
 namespace: blinklabs
 name: cardano
-version: 0.1.1
+version: 0.1.2
 readme: README.md
 authors:
   - Aurora Gaffney <aurora@blinklabs.io>
   - Chris Gianelloni <wolf31o2@blinklabs.io>
+  - Ales Verbic <verbotenj@blinklabs.io>
 description: Ansible playbooks and roles to install Cardano services of various types
 license:
   - Apache-2.0
