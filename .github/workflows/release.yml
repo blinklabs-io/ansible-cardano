@@ -19,7 +19,13 @@ jobs:
     outputs:
       RELEASE_ID: ${{ steps.create-release.outputs.result }}
     steps:
-      - run: "echo \"RELEASE_TAG=${GITHUB_REF#refs/tags/}\" >> $GITHUB_ENV"
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get current version
+        id: cversion
+        run: echo "::set-output name=version::$(grep version galaxy.yml | sed -e 's:^.* ::')"
+
       - uses: actions/github-script@v6
         id: create-release
         with:
@@ -30,11 +36,11 @@ jobs:
               const response = await github.rest.repos.createRelease({
                 draft: true,
                 generate_release_notes: true,
-                name: process.env.RELEASE_TAG,
+                name: '${{ steps.cversion.outputs.version }}',
                 owner: context.repo.owner,
                 prerelease: false,
                 repo: context.repo.repo,
-                tag_name: process.env.RELEASE_TAG,
+                tag_name: '${{ steps.cversion.outputs.version }}',
               });
 
               return response.data.id;
