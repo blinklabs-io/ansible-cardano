@@ -10,8 +10,7 @@
     name: '{{ snek_docker_container_name }}'
     image: '{{ snek_docker_image }}'
     restart_policy: unless-stopped
-    command:
-      - "{{ snek_arguments | default([]) }}"
+    command: "{{ snek_arguments | default([]) }}"
     ports:
       - '{{ snek_port }}:{{ snek_container_port }}'
     env:
