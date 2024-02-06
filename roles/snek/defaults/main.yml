@@ -3,7 +3,7 @@
 snek_install_method: 'docker'
 
 # Snek version
-snek_version: '0.15.0'
+snek_version: '0.17.1'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
