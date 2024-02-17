@@ -11,8 +11,8 @@
   ansible.builtin.file:
     state: directory
     path: '{{ item }}'
-    owner: '{{ cardano_node_user }}'
-    group: '{{ cardano_node_group }}'
+    owner: '{{ cardano_node_user | string }}'
+    group: '{{ cardano_node_group | string }}'
     mode: '0755'
   loop:
     - '{{ cardano_node_ipc_dir }}'

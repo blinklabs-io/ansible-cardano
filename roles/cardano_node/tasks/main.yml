@@ -17,8 +17,8 @@
   ansible.builtin.file:
     state: directory
     path: '{{ item }}'
-    owner: '{{ cardano_node_user }}'
-    group: '{{ cardano_node_group }}'
+    owner: '{{ cardano_node_user | string }}'
+    group: '{{ cardano_node_group | string }}'
     mode: '0755'
   loop:
     - '{{ cardano_node_db_dir }}'
@@ -28,8 +28,8 @@
   ansible.builtin.file:
     state: directory
     path: '{{ item }}'
-    owner: '{{ cardano_node_user }}'
-    group: '{{ cardano_node_group }}'
+    owner: '{{ cardano_node_user | string }}'
+    group: '{{ cardano_node_group | string }}'
     mode: '0755'
   loop:
     - '{{ cardano_node_topology_dir }}'
@@ -39,8 +39,8 @@
   template:
     dest: '{{ cardano_node_topology_file }}'
     src: custom-topology.json.j2
-    owner: '{{ cardano_node_user }}'
-    group: '{{ cardano_node_group }}'
+    owner: '{{ cardano_node_user | string }}'
+    group: '{{ cardano_node_group | string }}'
     mode: 0644
   register: cardano_topology
   when: cardano_node_manage_topology and not cardano_node_p2p_enabled
@@ -49,8 +49,8 @@
   template:
     dest: '{{ cardano_node_topology_file }}'
     src: custom-p2p-topology.json.j2
-    owner: '{{ cardano_node_user }}'
-    group: '{{ cardano_node_group }}'
+    owner: '{{ cardano_node_user | string }}'
+    group: '{{ cardano_node_group | string }}'
     mode: 0644
   register: cardano_topology_p2p
   when: cardano_node_manage_topology and cardano_node_p2p_enabled
