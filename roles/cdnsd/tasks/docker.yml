@@ -1,0 +1,22 @@
+---
+- name: Initialize cdnsd_docker_volumes fact
+  set_fact:
+    cdnsd_docker_volumes: '{{ cdnsd_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ cdnsd_db_dir }}:{{ cdnsd_db_container_dir }}'
+
+- name: Create container
+  docker_container:
+    name: '{{ cdnsd_docker_container_name }}'
+    image: '{{ cdnsd_docker_image }}'
+    restart_policy: unless-stopped
+    env:
+      DNS_LISTEN_PORT: '{{ cdnsd_container_port }}'
+      STATE_DIR: '{{ cdnsd_db_container_dir }}'
+      INDEXER_SCRIPT_ADDRESS: '{{ cdnsd_indexer_script_address }}'
+      INDEXER_INTERCEPT_SLOT: '{{ cdnsd_indexer_intercept_slot | string }}'
+      INDEXER_INTERCEPT_HASH: '{{ cdnsd_indexer_intercept_hash }}'
+      INDEXER_NETWORK: '{{ cdnsd_network }}'
+    ports:
+      - '{{ cdnsd_port }}:{{ cdnsd_container_port }}'
+    volumes: '{{ cdnsd_docker_volumes | list }}'
