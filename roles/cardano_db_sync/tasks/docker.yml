@@ -9,7 +9,7 @@
     env:
       NETWORK: '{{ cardano_db_sync_network }}'
       POSTGRES_HOST: '172.17.0.1'
-      POSTGRES_PORT: 5432
+      POSTGRES_PORT: '5432'
       POSTGRES_DB: 'cexplorer'
       POSTGRES_USER: 'cexplorer'
       POSTGRES_PASSWORD: 'cexplorer'
