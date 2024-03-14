@@ -11,7 +11,7 @@
     image: '{{ cdnsd_docker_image }}'
     restart_policy: unless-stopped
     env:
-      DNS_LISTEN_PORT: '{{ cdnsd_container_port }}'
+      DNS_LISTEN_PORT: '{{ cdnsd_container_port | string }}'
       STATE_DIR: '{{ cdnsd_db_container_dir }}'
       INDEXER_SCRIPT_ADDRESS: '{{ cdnsd_indexer_script_address }}'
       INDEXER_INTERCEPT_SLOT: '{{ cdnsd_indexer_intercept_slot | string }}'
