@@ -17,7 +17,7 @@ cardano_node_user: root
 cardano_node_group: root
 
 # Docker image
-cdnsd_docker_image: 'ghcr.io/blinklabs-io/cdnsd:v{{ cdnsd_version }}'
+cdnsd_docker_image: 'ghcr.io/blinklabs-io/cdnsd:{{ cdnsd_version }}'
 
 # Docker container name
 cdnsd_docker_container_name: cdnsd
