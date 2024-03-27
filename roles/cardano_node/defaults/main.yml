@@ -3,7 +3,7 @@
 cardano_node_install_method: 'docker'
 
 # Cardano node version
-cardano_node_version: '1.35.7'
+cardano_node_version: '8.9.1'
 
 # Cardano network
 cardano_node_network: mainnet
@@ -56,13 +56,13 @@ cardano_node_rts_flags: '-N2 -A64m -I0 -qg -qb --disable-delayed-os-memory-retur
 
 # Config
 cardano_node_manage_config: false # this currently controls mounting only
-cardano_node_config_file: '{{ cardano_node_config_container_dir }}/{{ cardano_node_network }}-config.json'
+cardano_node_config_file: '{{ cardano_node_config_container_dir }}/{{ cardano_node_network }}/config.json'
 
 # Topology
 cardano_node_manage_topology: false
 cardano_node_p2p_enabled: '{{ false if cardano_node_network == "mainnet" else true }}'
-cardano_node_p2p_use_ledger_after: 84916732
-cardano_node_topology_file: '{{ cardano_node_topology_container_dir }}/{{ cardano_node_network }}-topology.json'
+cardano_node_p2p_use_ledger_after: 116812831
+cardano_node_topology_file: '{{ cardano_node_topology_container_dir }}/{{ cardano_node_network }}/topology.json'
 cardano_node_topology_localroots: []
 cardano_node_topology_publicroots:
   - address: 'relays-new.cardano-{{ cardano_node_network }}.iohk.io'

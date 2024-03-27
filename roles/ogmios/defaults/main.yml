@@ -3,7 +3,7 @@
 ogmios_install_method: 'docker'
 
 # Ogmios version
-ogmios_version: '5.6.0'
+ogmios_version: '6.2.0'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
@@ -21,7 +21,7 @@ cardano_node_user: root
 cardano_node_group: root
 
 # Docker image
-ogmios_docker_image: 'cardanosolutions/ogmios:v{{ ogmios_version }}-{{ ogmios_network }}'
+ogmios_docker_image: 'cardanosolutions/ogmios:v{{ ogmios_version }}'
 
 # Docker container name
 ogmios_docker_container_name: ogmios
@@ -30,8 +30,8 @@ ogmios_docker_container_name: ogmios
 ogmios_container_port: 1337
 ogmios_port: '{{ ogmios_container_port }}'
 
-cardano_node_config_file: '{{ cardano_node_config_dir }}/{{ ogmios_network }}-config.json'
-ogmios_config_file: '{{ ogmios_config_container_dir }}/{{ ogmios_network }}-config.json'
+cardano_node_config_file: '{{ cardano_node_config_dir }}/{{ ogmios_network }}/config.json'
+ogmios_config_file: '{{ ogmios_config_container_dir }}/{{ ogmios_network }}/config.json'
 cardano_node_socket_name: node.socket
 
 # Cardano network
