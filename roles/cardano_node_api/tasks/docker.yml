@@ -6,10 +6,12 @@
     restart_policy: unless-stopped
     ports:
       - '{{ cardano_node_api_port }}:{{ cardano_node_api_container_port }}'
+      - '{{ cardano_node_api_grpc_port }}:{{ cardano_node_api_grpc_container_port }}'
       - '{{ cardano_node_api_metrics_port }}:{{ cardano_node_api_metrics_container_port }}'
     env:
       API_LISTEN_PORT: '{{ cardano_node_api_container_port | string }}'
       CARDANO_NETWORK: '{{ cardano_node_api_network }}'
+      GRPC_LISTENT_PORT: '{{ cardano_node_api_grpc_container_port | string }}'
       METRICS_LISTEN_PORT: '{{ cardano_node_api_metrics_container_port | string }}'
     volumes:
       - '{{ cardano_node_ipc_dir }}:{{ cardano_node_api_ipc_container_dir }}'
