@@ -1,47 +1,47 @@
 ---
 # Install method
-snek_install_method: 'docker'
+adder_install_method: 'docker'
 
-# Snek version
-snek_version: '0.17.2'
+# Adder version
+adder_version: '0.17.2'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
 
 # DB directory for host/container
-snek_db_dir: '{{ cardano_node_dir }}/snek'
+adder_db_dir: '{{ cardano_node_dir }}/adder'
 
 # Config directory for host/container
 cardano_node_config_dir: '{{ cardano_node_dir }}/config'
-snek_config_container_dir: '{{ cardano_node_config_dir }}'
+adder_config_container_dir: '{{ cardano_node_config_dir }}'
 
 # IPC directory for host/container
 cardano_node_ipc_dir: '{{ cardano_node_dir }}/ipc'
-snek_ipc_container_dir: '/node-ipc'
+adder_ipc_container_dir: '/node-ipc'
 
 # User/group for file/directory ownership
 cardano_node_user: root
 cardano_node_group: root
 
 # Docker image
-snek_docker_image: 'ghcr.io/blinklabs-io/snek:{{ snek_version }}'
+adder_docker_image: 'ghcr.io/blinklabs-io/adder:{{ adder_version }}'
 
 # Docker container name
-snek_docker_container_name: snek
+adder_docker_container_name: adder
 
 # Port for host/container
-snek_container_port: 8080
-snek_port: '{{ snek_container_port }}'
+adder_container_port: 8080
+adder_port: '{{ adder_container_port }}'
 
 # Cardano network
-snek_network: mainnet
+adder_network: mainnet
 
 cardano_node_socket_name: node.socket
 
-# snek arguments (defaults to everything)
-snek_arguments:
+# adder arguments (defaults to everything)
+adder_arguments:
 # Local node
   # - '-v'
-  # - '{{ cardano_node_ipc_dir }}:{{ snek_ipc_container_dir }}'
+  # - '{{ cardano_node_ipc_dir }}:{{ adder_ipc_container_dir }}'
   - '-input-chainsync-network'
-  - '{{ snek_network }}'
+  - '{{ adder_network }}'

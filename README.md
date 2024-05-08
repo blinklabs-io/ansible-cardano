@@ -16,7 +16,7 @@ Inside this collection are several roles.
 - `blinklabs.cardano.cardano_node_api`
 - `blinklabs.cardano.kupo`
 - `blinklabs.cardano.ogmios`
-- `blinklabs.cardano.snek`
+- `blinklabs.cardano.adder`
 - `blinklabs.cardano.tx_submit_api`
 
 Each role is documented independently under the roles directory.
