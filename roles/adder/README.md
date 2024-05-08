@@ -1,7 +1,7 @@
-Snek
+Adder
 =========
 
-This role deploys an Snek instance.
+This role deploys an Adder instance.
 
 Requirements
 ------------
@@ -36,7 +36,7 @@ passed in as parameters) is always nice for users too:
     - hosts: servers
       tasks:
         - include_role:
-            name: blinklabs.cardano.snek
+            name: blinklabs.cardano.adder
 ```
 
 License

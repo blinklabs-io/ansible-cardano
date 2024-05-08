@@ -1,14 +1,14 @@
 ---
-- name: Echo Snek
-  command: echo "hello snek"
+- name: Echo Adder
+  command: echo "hello adder"
 
 - name: Check install method
   vars:
     _allowed_install_methods: ['docker']
   ansible.builtin.assert:
     that:
-      - snek_install_method in _allowed_install_methods
-    fail_msg: 'The specified install method ({{ snek_install_method }}) is not one of the allowed values ({{ _allowed_install_methods | join(", ") }})'
+      - adder_install_method in _allowed_install_methods
+    fail_msg: 'The specified install method ({{ adder_install_method }}) is not one of the allowed values ({{ _allowed_install_methods | join(", ") }})'
 
 # We use the node owner and group
 - name: Create directories
@@ -23,4 +23,4 @@
 
 - name: Include docker-related tasks
   ansible.builtin.include_tasks: docker.yml
-  when: snek_install_method == 'docker'
+  when: adder_install_method == 'docker'
