@@ -6,17 +6,22 @@
     - '{{ cdnsd_db_dir }}:{{ cdnsd_db_container_dir }}'
 
 - name: Create container
-  docker_container:
-    name: '{{ cdnsd_docker_container_name }}'
-    image: '{{ cdnsd_docker_image }}'
-    restart_policy: unless-stopped
-    env:
+  vars:
+    cdnsd_base_env:
       DNS_LISTEN_PORT: '{{ cdnsd_container_port | string }}'
       STATE_DIR: '{{ cdnsd_db_container_dir }}'
       INDEXER_SCRIPT_ADDRESS: '{{ cdnsd_indexer_script_address }}'
       INDEXER_INTERCEPT_SLOT: '{{ cdnsd_indexer_intercept_slot | string }}'
       INDEXER_INTERCEPT_HASH: '{{ cdnsd_indexer_intercept_hash }}'
       INDEXER_NETWORK: '{{ cdnsd_network }}'
+    cdnsd_full_env: '{{ cdnsd_base_env | combine(cdnsd_extra_env) }}'
+  docker_container:
+    name: '{{ cdnsd_docker_container_name }}'
+    image: '{{ cdnsd_docker_image }}'
+    user: '{{ cdnsd_container_user }}'
+    restart_policy: unless-stopped
+    env: '{{ cdnsd_full_env }}'
     ports:
-      - '{{ cdnsd_port }}:{{ cdnsd_container_port }}'
+      - '{{ cdnsd_port }}:{{ cdnsd_container_port }}/tcp'
+      - '{{ cdnsd_port }}:{{ cdnsd_container_port }}/udp'
     volumes: '{{ cdnsd_docker_volumes | list }}'

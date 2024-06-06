@@ -3,7 +3,7 @@
 cdnsd_install_method: 'docker'
 
 # cDNSd version
-cdnsd_version: '0.11.1'
+cdnsd_version: '0.13.0'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
@@ -22,9 +22,16 @@ cdnsd_docker_image: 'ghcr.io/blinklabs-io/cdnsd:{{ cdnsd_version }}'
 # Docker container name
 cdnsd_docker_container_name: cdnsd
 
+# Docker container user
+# This should generally match the owner of the DB dir
+cdnsd_container_user: '{{ cardano_node_user }}'
+
 # Port for host/container
 cdnsd_container_port: 53
 cdnsd_port: 20053
+
+# Extra env vars for cdnsd
+cdnsd_extra_env: {}
 
 # Cardano network
 cdnsd_network: preprod
