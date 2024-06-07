@@ -3,7 +3,7 @@
 tx_submit_api_install_method: 'docker'
 
 # Cardano Submit API version
-tx_submit_api_version: '0.17.0'
+tx_submit_api_version: '0.17.1'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
