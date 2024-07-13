@@ -28,6 +28,13 @@
     - '{{ cardano_node_topology_file }}:{{ cardano_node_topology_file }}'
   when: cardano_node_manage_topology
 
+- name: Add keys to cardano_node_docker_volumes fact
+  set_fact:
+    cardano_node_docker_volumes: '{{ cardano_node_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ cardano_node_keys_dir }}:{{ cardano_node_keys_container_dir }}'
+  when: '{{ cardano_node_block_producer | bool }}'
+
 - name: Create container
   docker_container:
     name: '{{ cardano_node_docker_container_name }}'
@@ -39,12 +46,18 @@
       - '{{ cardano_node_port }}:{{ cardano_node_container_port }}'
       - '{{ cardano_node_metrics_port }}:{{ cardano_node_metrics_container_port }}'
     env:
+      CARDANO_BLOCK_PRODUCER: '{{ cardano_node_block_producer | string }}'
       CARDANO_CONFIG: '{{ cardano_node_config_file }}'
       CARDANO_DATABASE_PATH: '{{ cardano_node_db_container_dir }}'
       CARDANO_NETWORK: '{{ cardano_node_network }}'
       CARDANO_NODE_SOCKET_PATH: '{{ cardano_node_ipc_container_dir }}/{{ cardano_node_socket_name }}'
       CARDANO_PORT: '{{ cardano_node_port | string }}'
       CARDANO_RTS_OPTS: '{{ cardano_node_rts_flags }}'
+      CARDANO_SHELLEY_KES_KEY: '{{ cardano_node_shelley_kes_key }}'
+      CARDANO_SHELLEY_OPERATIONAL_CERTIFICATE: '{{ cardano_node_shelley_opcert }}'
+      CARDANO_SHELLEY_VRF_KEY: '{{ cardano_node_shelley_vrf_key }}'
       CARDANO_SOCKET_PATH: '{{ cardano_node_ipc_container_dir }}/{{ cardano_node_socket_name }}'
       CARDANO_TOPOLOGY: '{{ cardano_node_topology_file }}'
+      RESTORE_SNAPSHOT: '{{ cardano_node_restore_snapshot | string }}'
+      SNAPSHOT_DIGEST: '{{ cardano_node_snapshot_digest }}'
     volumes: '{{ cardano_node_docker_volumes | list }}'
