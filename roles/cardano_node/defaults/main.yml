@@ -27,6 +27,10 @@ cardano_node_ipc_container_dir: '{{ cardano_node_ipc_dir }}'
 cardano_node_topology_dir: '{{ cardano_node_config_dir }}'
 cardano_node_topology_container_dir: '{{ cardano_node_topology_dir }}'
 
+# Block producer keys directory for host/container
+cardano_node_keys_dir: '{{ cardano_node_config_dir }}/keys'
+cardano_node_keys_container_dir: '{{ cardano_node_keys_dir }}'
+
 # User/group for file/directory ownership
 cardano_node_user: root
 cardano_node_group: root
@@ -71,3 +75,13 @@ cardano_node_topology_publicroots:
 
 # Install chrony
 chrony_enabled: true
+
+# Mithril configuration
+cardano_node_restore_snapshot: true
+cardano_node_snapshot_digest: 'latest'
+
+# Block Producer (also controls mounts for keys)
+cardano_node_block_producer: false
+cardano_node_shelley_kes_key: '{{ cardano_node_keys_container_dir }}/kes.skey'
+cardano_node_shelley_opcert: '{{ cardano_node_keys_container_dir }}/node.cert'
+cardano_node_shelley_vrf_key: '{{ cardano_node_keys_container_dir }}/vrf.skey'
