@@ -4,14 +4,10 @@
 
 name: Release and Deploy collection
 on:
-  # Allow manual triggering for testing
-  workflow_dispatch:
   # Trigger on change to galaxy.yml in main branch
   push:
-    branches:
-      - main
-    paths:
-      - galaxy.yml
+    tags:
+      - 'v*.*.*'
 
 jobs:
   create-draft-release:
@@ -19,12 +15,7 @@ jobs:
     outputs:
       RELEASE_ID: ${{ steps.create-release.outputs.result }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Get current version
-        id: cversion
-        run: echo "::set-output name=version::$(grep version galaxy.yml | sed -e 's:^.* ::')"
+      - run: "echo \"RELEASE_TAG=${GITHUB_REF#refs/tags/}\" >> $GITHUB_ENV"
 
       - uses: actions/github-script@v6
         id: create-release
@@ -36,11 +27,11 @@ jobs:
               const response = await github.rest.repos.createRelease({
                 draft: true,
                 generate_release_notes: true,
-                name: '${{ steps.cversion.outputs.version }}',
+                name: process.env.RELEASE_TAG,
                 owner: context.repo.owner,
                 prerelease: false,
                 repo: context.repo.repo,
-                tag_name: '${{ steps.cversion.outputs.version }}',
+                tag_name: process.env.RELEASE_TAG,
               });
 
               return response.data.id;
@@ -55,12 +46,8 @@ jobs:
         python-version: [3.9]
     needs: [create-draft-release]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Get current version
-        id: cversion
-        run: echo "::set-output name=version::$(grep version galaxy.yml | sed -e 's:^.* ::')"
+      - run: "echo \"RELEASE_TAG=${GITHUB_REF#refs/tags/}\" >> $GITHUB_ENV"
+      - run: "echo \"ARTIFACT_TAG=${GITHUB_REF#refs/tags/v}\" >> $GITHUB_ENV"
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
@@ -73,12 +60,16 @@ jobs:
           pip install --upgrade ansible
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Replace version in galaxy.yml
+        run: |
+          sed -i "s/^version: .*/version: ${{ env.ARTIFACT_TAG }}/" galaxy.yml
+
       - name: Build Ansible Collection
         run: ansible-galaxy collection build --force
 
       - name: Upload release asset
         run: |
-          _filename=blinklabs-cardano-${{ steps.cversion.outputs.version }}.tar.gz
+          _filename=blinklabs-cardano-${{ env.ARTIFACT_TAG }}.tar.gz
           curl \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Content-Type: application/tar+gzip" \
@@ -86,7 +77,7 @@ jobs:
             https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.create-draft-release.outputs.RELEASE_ID }}/assets?name=${_filename}
 
       - name: Publish Ansible collection to Galaxy
-        run: ansible-galaxy collection publish blinklabs-cardano-${{ steps.cversion.outputs.version }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}
+        run: ansible-galaxy collection publish blinklabs-cardano-${{ env.ARTIFACT_TAG }}.tar.gz --api-key ${{ secrets.GALAXY_API_KEY }}
 
   finalize-release:
     runs-on: ubuntu-latest

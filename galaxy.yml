@@ -1,6 +1,7 @@
 namespace: blinklabs
 name: cardano
-version: 0.2.2
+# NOTE: this is automatically replaced on publish
+version: 0.0.0
 readme: README.md
 authors:
   - Aurora Gaffney <aurora@blinklabs.io>
