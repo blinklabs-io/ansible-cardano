@@ -3,7 +3,7 @@
 cdnsd_install_method: 'docker'
 
 # cDNSd version
-cdnsd_version: '0.13.0'
+cdnsd_version: '0.14.0'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
@@ -32,11 +32,3 @@ cdnsd_port: 20053
 
 # Extra env vars for cdnsd
 cdnsd_extra_env: {}
-
-# Cardano network
-cdnsd_network: preprod
-
-# Configuration variables
-cdnsd_indexer_script_address: "addr_test1vr75xezmpxastymx985l3gamuxrwqdwcfrcnjlygs55aynsqu3edq"
-cdnsd_indexer_intercept_slot: "50844079"
-cdnsd_indexer_intercept_hash: "81325118471fddb00a20327572b371aee7cce13b846a18500d011b9cefd2a34c"

@@ -10,10 +10,6 @@
     cdnsd_base_env:
       DNS_LISTEN_PORT: '{{ cdnsd_container_port | string }}'
       STATE_DIR: '{{ cdnsd_db_container_dir }}'
-      INDEXER_SCRIPT_ADDRESS: '{{ cdnsd_indexer_script_address }}'
-      INDEXER_INTERCEPT_SLOT: '{{ cdnsd_indexer_intercept_slot | string }}'
-      INDEXER_INTERCEPT_HASH: '{{ cdnsd_indexer_intercept_hash }}'
-      INDEXER_NETWORK: '{{ cdnsd_network }}'
     cdnsd_full_env: '{{ cdnsd_base_env | combine(cdnsd_extra_env) }}'
   docker_container:
     name: '{{ cdnsd_docker_container_name }}'
