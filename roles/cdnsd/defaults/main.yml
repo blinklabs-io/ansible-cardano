@@ -3,7 +3,7 @@
 cdnsd_install_method: 'docker'
 
 # cDNSd version
-cdnsd_version: '0.17.0'
+cdnsd_version: '0.17.1'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
