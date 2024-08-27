@@ -3,7 +3,7 @@
 cardano_db_sync_install_method: 'docker'
 
 # Cardano DB Sync version
-cardano_db_sync_version: '13.1.1.3'
+cardano_db_sync_version: '13.4.1.0'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
