@@ -1,4 +1,18 @@
 ---
+- name: Initialize cardano_node_api_docker_volumes fact
+  set_fact:
+    cardano_node_api_docker_volumes: '{{ cardano_node_api_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ cardano_node_ipc_dir }}:{{ cardano_node_api_ipc_container_dir }}'
+
+- name: Add tls certificate to cardano_node_api_docker_volumes fact
+  set_fact:
+    cardano_node_api_docker_volumes: '{{ cardano_node_api_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ cardano_node_api_tls_cert_file_path }}:{{ cardano_node_api_tls_cert_file_container_path }}'
+    - '{{ cardano_node_api_tls_key_file_path }}:{{ cardano_node_api_tls_key_file_container_path }}'
+  when: cardano_node_api_tls_cert_file_path != '' && cardano_node_api_tls_key_file_path != ''
+
 - name: Create container
   docker_container:
     name: '{{ cardano_node_api_docker_container_name }}'
@@ -10,8 +24,9 @@
       - '{{ cardano_node_api_metrics_port }}:{{ cardano_node_api_metrics_container_port }}'
     env:
       API_LISTEN_PORT: '{{ cardano_node_api_container_port | string }}'
-      CARDANO_NETWORK: '{{ cardano_node_api_network }}'
+      CARDANO_NETWORK: '{{ cardano_node_api_network | string }}'
       GRPC_LISTEN_PORT: '{{ cardano_node_api_grpc_container_port | string }}'
       METRICS_LISTEN_PORT: '{{ cardano_node_api_metrics_container_port | string }}'
-    volumes:
-      - '{{ cardano_node_ipc_dir }}:{{ cardano_node_api_ipc_container_dir }}'
+      TLS_CERT_FILE_PATH: '{{ cardano_node_api_tls_cert_file_path | string }}'
+      TLS_KEY_FILE_PATH: '{{ cardano_node_api_tls_key_file_path | string }}'
+    volumes: '{{ cardano_node_api_docker_volumes | list }}'
