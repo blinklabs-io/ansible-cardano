@@ -1,16 +1,55 @@
 {
-  "Producers": [
-{% set peer_count = (cardano_node_topology_localroots + cardano_node_topology_publicroots) | length %}
-{% for peer in (cardano_node_topology_localroots + cardano_node_topology_publicroots) %}
+{% set peer_count = cardano_node_topology_bootstrap_peers | length %}
+{% if peer_count > 0 %}
+  "bootstrapPeers": [
+{% for peer in cardano_node_topology_bootstrap_peers %}
     {
       "address": "{{ peer.address }}",
-      "port": {{ peer.port }},
-      "valency": {{ peer.valency | default(1) }}
+      "port": {{ peer.port | int }}
 {% if loop.index == peer_count %}
     }
 {% else %}
     },
 {% endif %}
+  ],
+{% endif %}
+  "localRoots": [
+    {
+      "accessPoints": [
+{% set peer_count = cardano_node_topology_localroots | length %}
+{% for peer in cardano_node_topology_localroots %}
+        {
+          "address": "{{ peer.address }}",
+          "port": {{ peer.port | int }}
+{% if loop.index == peer_count %}
+        }
+{% else %}
+        },
+{% endif %}
 {% endfor %}
-  ]
+      ],
+      "advertise": false,
+      "trustable": false,
+      "valency": 1
+    }
+  ],
+  "publicRoots": [
+    {
+      "accessPoints": [
+{% set peer_count = cardano_node_topology_publicroots | length %}
+{% for peer in cardano_node_topology_publicroots %}
+        {
+          "address": "{{ peer.address }}",
+          "port": {{ peer.port | int }}
+{% if loop.index == peer_count %}
+        }
+{% else %}
+        },
+{% endif %}
+{% endfor %}
+      ],
+      "advertise": false
+    }
+  ],
+  "useLedgerAfterSlot": {{ cardano_node_topology_use_ledger_after_slot }}
 }
