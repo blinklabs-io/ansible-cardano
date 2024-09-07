@@ -11,7 +11,7 @@
   loop:
     - '{{ cardano_node_api_tls_cert_file_path }}:{{ cardano_node_api_tls_cert_file_container_path }}'
     - '{{ cardano_node_api_tls_key_file_path }}:{{ cardano_node_api_tls_key_file_container_path }}'
-  when: cardano_node_api_tls_cert_file_path != '' && cardano_node_api_tls_key_file_path != ''
+  when: cardano_node_api_tls_cert_file_path != '' and cardano_node_api_tls_key_file_path != ''
 
 - name: Create container
   docker_container:
