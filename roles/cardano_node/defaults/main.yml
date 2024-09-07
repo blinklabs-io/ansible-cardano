@@ -64,14 +64,18 @@ cardano_node_config_file: '{{ cardano_node_config_container_dir }}/{{ cardano_no
 
 # Topology
 cardano_node_manage_topology: false
-cardano_node_p2p_enabled: '{{ false if cardano_node_network == "mainnet" else true }}'
-cardano_node_p2p_use_ledger_after: 116812831
 cardano_node_topology_file: '{{ cardano_node_topology_container_dir }}/{{ cardano_node_network }}/topology.json'
+cardano_node_topology_use_ledger_after_slot: 128908821
 cardano_node_topology_localroots: []
-cardano_node_topology_publicroots:
-  - address: 'relays-new.cardano-{{ cardano_node_network }}.iohk.io'
+cardano_node_topology_publicroots: []
+# Adjust for non-mainnet deployments
+cardano_node_topology_bootstrap_peers:
+  - address: 'backbone.cardano.iog.io'
     port: 3001
-    valency: 2 # this is only used for legacy topology
+  - address: 'backbone.mainnet.emurgornd.com'
+    port: 3001
+  - address: 'backbone.mainnet.cardanofoundation.org'
+    port: 3001
 
 # Install chrony
 chrony_enabled: true

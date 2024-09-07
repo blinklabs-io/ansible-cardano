@@ -35,7 +35,7 @@
     - '{{ cardano_node_topology_dir }}'
   when: cardano_node_manage_topology
 
-- name: Generate custom topology config (legacy)
+- name: Generate custom topology config
   template:
     dest: '{{ cardano_node_topology_file }}'
     src: custom-topology.json.j2
@@ -43,17 +43,7 @@
     group: '{{ cardano_node_group | string }}'
     mode: 0644
   register: cardano_topology
-  when: cardano_node_manage_topology and not cardano_node_p2p_enabled
-
-- name: Generate custom topology config (P2P)
-  template:
-    dest: '{{ cardano_node_topology_file }}'
-    src: custom-p2p-topology.json.j2
-    owner: '{{ cardano_node_user | string }}'
-    group: '{{ cardano_node_group | string }}'
-    mode: 0644
-  register: cardano_topology_p2p
-  when: cardano_node_manage_topology and cardano_node_p2p_enabled
+  when: cardano_node_manage_topology
 
 - name: Include docker-related tasks
   ansible.builtin.include_tasks: docker.yml
