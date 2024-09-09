@@ -33,7 +33,7 @@
     cardano_node_docker_volumes: '{{ cardano_node_docker_volumes | default([]) + [item] }}'
   loop:
     - '{{ cardano_node_keys_dir }}:{{ cardano_node_keys_container_dir }}'
-  when: '{{ cardano_node_block_producer | bool }}'
+  when: cardano_node_block_producer | bool
 
 - name: Create container
   docker_container:
