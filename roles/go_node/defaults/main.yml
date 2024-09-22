@@ -1,0 +1,85 @@
+---
+# Install method
+go_node_install_method: 'docker'
+
+# Cardano node version
+go_node_version: 'main'
+
+# Cardano network
+go_node_network: mainnet
+
+# Base host directory for node data
+go_node_dir: /opt/cardano
+
+# Config directory for host/container
+go_node_config_dir: '{{ go_node_dir }}/config'
+go_node_config_container_dir: '{{ go_node_config_dir }}'
+
+# DB directory for host/container
+go_node_db_dir: '{{ go_node_dir }}/data'
+go_node_db_container_dir: '{{ go_node_db_dir }}'
+
+# IPC directory for host/container
+go_node_ipc_dir: '{{ go_node_dir }}/ipc'
+go_node_ipc_container_dir: '{{ go_node_ipc_dir }}'
+
+# Topology directory for host/container
+go_node_topology_dir: '{{ go_node_config_dir }}'
+go_node_topology_container_dir: '{{ go_node_topology_dir }}'
+
+# Block producer keys directory for host/container
+go_node_keys_dir: '{{ go_node_config_dir }}/keys'
+go_node_keys_container_dir: '{{ go_node_keys_dir }}'
+
+# User/group for file/directory ownership
+go_node_user: root
+go_node_group: root
+
+# Docker image
+go_node_docker_image: 'ghcr.io/blinklabs-io/node:{{ go_node_version }}'
+
+# Docker container name
+go_node_docker_container_name: node
+
+# Port for host/container
+go_node_container_port: 3001
+go_node_port: '{{ go_node_container_port }}'
+
+# Metrics port for host/container
+go_node_metrics_container_port: 12798
+go_node_metrics_port: '{{ go_node_metrics_container_port }}'
+
+# Socket file name
+go_node_socket_name: node.socket
+
+# Config
+go_node_manage_config: false # this currently controls mounting only
+go_node_config_file: '{{ go_node_config_container_dir }}/{{ go_node_network }}/config.json'
+
+# Topology
+go_node_manage_topology: false
+go_node_topology_file: '{{ go_node_topology_container_dir }}/{{ go_node_network }}/topology.json'
+go_node_topology_use_ledger_after_slot: 128908821
+go_node_topology_localroots: []
+go_node_topology_publicroots: []
+# Adjust for non-mainnet deployments
+go_node_topology_bootstrap_peers:
+  - address: 'backbone.cardano.iog.io'
+    port: 3001
+  - address: 'backbone.mainnet.emurgornd.com'
+    port: 3001
+  - address: 'backbone.mainnet.cardanofoundation.org'
+    port: 3001
+
+# Install chrony
+chrony_enabled: true
+
+# Mithril configuration
+go_node_restore_snapshot: true
+go_node_snapshot_digest: 'latest'
+
+# Block Producer (also controls mounts for keys)
+go_node_block_producer: false
+go_node_shelley_kes_key: '{{ go_node_keys_container_dir }}/kes.skey'
+go_node_shelley_opcert: '{{ go_node_keys_container_dir }}/node.cert'
+go_node_shelley_vrf_key: '{{ go_node_keys_container_dir }}/vrf.skey'
