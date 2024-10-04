@@ -1,4 +1,16 @@
 ---
+- name: Initialize tx_submit_api_mirror_docker_volumes fact
+  set_fact:
+    tx_submit_api_mirror_docker_volumes: []
+
+- name: Add tls certificate to tx_submit_api_mirror_docker_volumes fact
+  set_fact:
+    tx_submit_api_mirror_docker_volumes: '{{ tx_submit_api_mirror_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ tx_submit_api_tls_cert_file_path }}:{{ tx_submit_api_tls_cert_file_container_path }}'
+    - '{{ tx_submit_api_tls_key_file_path }}:{{ tx_submit_api_tls_key_file_container_path }}'
+  when: tx_submit_api_tls_cert_file_path != '' and tx_submit_api_tls_key_file_path != ''
+
 - name: Create container
   docker_container:
     name: '{{ tx_submit_api_mirror_docker_container_name }}'
@@ -10,3 +22,6 @@
     env:
       API_LISTEN_PORT: '{{ tx_submit_api_mirror_container_port | string }}'
       BACKENDS: "{{ tx_submit_api_mirror_backends | join(',') }}"
+      TLS_CERT_FILE_PATH: '{{ tx_submit_api_mirror_tls_cert_file_path | string }}'
+      TLS_KEY_FILE_PATH: '{{ tx_submit_api_mirror_tls_key_file_path | string }}'
+    volumes: '{{ tx_submit_api_mirror_docker_volumes | list }}'
