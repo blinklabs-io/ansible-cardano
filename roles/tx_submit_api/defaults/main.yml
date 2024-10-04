@@ -3,7 +3,7 @@
 tx_submit_api_install_method: 'docker'
 
 # Cardano Submit API version
-tx_submit_api_version: '0.17.5'
+tx_submit_api_version: '0.18.0'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
@@ -32,3 +32,9 @@ tx_submit_api_metrics_port: '{{ tx_submit_api_metrics_container_port }}'
 
 # Cardano network
 tx_submit_api_network: mainnet
+
+# SSL certificate and key (optional)
+tx_submit_api_tls_cert_file_path: ''
+tx_submit_api_tls_cert_file_container_path: '{{ tx_submit_api_tls_cert_file_path }}'
+tx_submit_api_tls_key_file_path: ''
+tx_submit_api_tls_key_file_container_path: '{{ tx_submit_api_tls_key_file_path }}'

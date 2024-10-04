@@ -1,4 +1,18 @@
 ---
+- name: Initialize tx_submit_api_docker_volumes fact
+  set_fact:
+    tx_submit_api_docker_volumes: '{{ tx_submit_api_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ cardano_node_ipc_dir }}:{{ tx_submit_api_ipc_container_dir }}'
+
+- name: Add tls certificate to tx_submit_api_docker_volumes fact
+  set_fact:
+    tx_submit_api_docker_volumes: '{{ tx_submit_api_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ tx_submit_api_tls_cert_file_path }}:{{ tx_submit_api_tls_cert_file_container_path }}'
+    - '{{ tx_submit_api_tls_key_file_path }}:{{ tx_submit_api_tls_key_file_container_path }}'
+  when: tx_submit_api_tls_cert_file_path != '' and tx_submit_api_tls_key_file_path != ''
+
 - name: Create container
   docker_container:
     name: '{{ tx_submit_api_docker_container_name }}'
@@ -9,5 +23,6 @@
       - '{{ tx_submit_api_metrics_port }}:{{ tx_submit_api_metrics_container_port }}'
     env:
       CARDANO_NETWORK: '{{ tx_submit_api_network }}'
-    volumes:
-      - '{{ cardano_node_ipc_dir }}:{{ tx_submit_api_ipc_container_dir }}'
+      TLS_CERT_FILE_PATH: '{{ tx_submit_api_tls_cert_file_path | string }}'
+      TLS_KEY_FILE_PATH: '{{ tx_submit_api_tls_key_file_path | string }}'
+    volumes: '{{ tx_submit_api_docker_volumes | list }}'
