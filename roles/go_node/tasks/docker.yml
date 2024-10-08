@@ -32,7 +32,7 @@
     name: '{{ go_node_docker_container_name }}'
     image: '{{ go_node_docker_image }}'
     command:
-      - run
+      - --debug
     restart_policy: unless-stopped
     ports:
       - '{{ go_node_port }}:{{ go_node_container_port }}'
