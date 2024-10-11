@@ -1,0 +1,44 @@
+---
+# Install method
+dolos_install_method: 'docker'
+
+# Dolos version
+dolos_version: '0.15.1'
+
+# Cardano network
+dolos_network: mainnet
+
+# Base host directory for node data
+cardano_node_dir: /opt/cardano
+
+# DB directory for host/container
+dolos_db_dir: '{{ cardano_node_dir }}/dolos'
+dolos_db_container_dir: '/data'
+
+# Config directory for host/container (cardano-node)
+cardano_node_config_dir: '{{ cardano_node_dir }}/config'
+dolos_cardano_node_config_container_dir: '/config'
+# Config directory for host/container (dolos)
+dolos_etc_container_dir: '/etc/dolos'
+
+# IPC directory for host/container
+cardano_node_ipc_dir: '{{ cardano_node_dir }}/ipc'
+dolos_ipc_container_dir: '/ipc'
+
+# User/group for file/directory ownership
+cardano_node_user: root
+cardano_node_group: root
+
+# Docker image
+dolos_docker_image: 'ghcr.io/txpipe/dolos:v{{ dolos_version }}'
+
+# Docker container name
+dolos_docker_container_name: dolos
+
+# Port for host/container (relay)
+dolos_relay_container_port: 30013
+dolos_relay_port: '{{ dolos_relay_container_port }}'
+
+# Port for host/container (grpc)
+dolos_grpc_container_port: 50051
+dolos_grpc_port: '{{ dolos_grpc_container_port }}'
