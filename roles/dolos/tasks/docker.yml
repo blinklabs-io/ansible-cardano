@@ -1,0 +1,27 @@
+---
+- name: Initialize dolos_docker_volumes fact
+  set_fact:
+    dolos_docker_volumes: '{{ dolos_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ cardano_node_ipc_dir }}:{{ dolos_ipc_container_dir }}'
+    - '{{ dolos_db_dir }}:{{ dolos_db_container_dir }}'
+
+- name: Add config to dolos_docker_volumes fact
+  set_fact:
+    dolos_docker_volumes: '{{ dolos_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ cardano_node_config_dir }}/{{ dolos_network}}:{{ dolos_cardano_node_config_container_dir }}'
+    - '{{ cardano_node_config_dir }}/dolos:{{ dolos_etc_container_dir }}'
+
+- name: Create container
+  docker_container:
+    name: '{{ dolos_docker_container_name }}'
+    image: '{{ dolos_docker_image }}'
+    restart_policy: unless-stopped
+    command:
+      - dolos
+      - daemon
+    ports:
+      - '{{ dolos_grpc_port }}:{{ dolos_grpc_container_port }}'
+      - '{{ dolos_relay_port }}:{{ dolos_relay_container_port }}'
+    volumes: '{{ dolos_docker_volumes | list }}'
