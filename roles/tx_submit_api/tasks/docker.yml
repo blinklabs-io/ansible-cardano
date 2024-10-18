@@ -22,6 +22,7 @@
       - '{{ tx_submit_api_port }}:{{ tx_submit_api_container_port }}'
       - '{{ tx_submit_api_metrics_port }}:{{ tx_submit_api_metrics_container_port }}'
     env:
+      API_LISTEN_PORT: '{{ tx_submit_api_container_port | string }}'
       CARDANO_NETWORK: '{{ tx_submit_api_network }}'
       TLS_CERT_FILE_PATH: '{{ tx_submit_api_tls_cert_file_path | string }}'
       TLS_KEY_FILE_PATH: '{{ tx_submit_api_tls_key_file_path | string }}'
