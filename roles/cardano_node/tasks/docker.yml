@@ -46,7 +46,7 @@
       - '{{ cardano_node_port }}:{{ cardano_node_container_port }}'
       - '{{ cardano_node_metrics_port }}:{{ cardano_node_metrics_container_port }}'
     env:
-      CARDANO_BLOCK_PRODUCER: '{{ cardano_node_block_producer | string }}'
+      CARDANO_BLOCK_PRODUCER: '{{ "true" if (cardano_node_block_producer | bool) else "false" }}'
       CARDANO_CONFIG: '{{ cardano_node_config_file }}'
       CARDANO_DATABASE_PATH: '{{ cardano_node_db_container_dir }}'
       CARDANO_NETWORK: '{{ cardano_node_network }}'
@@ -58,6 +58,6 @@
       CARDANO_SHELLEY_VRF_KEY: '{{ cardano_node_shelley_vrf_key }}'
       CARDANO_SOCKET_PATH: '{{ cardano_node_ipc_container_dir }}/{{ cardano_node_socket_name }}'
       CARDANO_TOPOLOGY: '{{ cardano_node_topology_file }}'
-      RESTORE_SNAPSHOT: '{{ cardano_node_restore_snapshot | string }}'
+      RESTORE_SNAPSHOT: '{{ "true" if (cardano_node_restore_snapshot | bool) else "false" }}'
       SNAPSHOT_DIGEST: '{{ cardano_node_snapshot_digest }}'
     volumes: '{{ cardano_node_docker_volumes | list }}'
