@@ -28,6 +28,13 @@
     group: '{{ cardano_node_group | string }}'
     mode: 0644
 
+- name: Unarchive Dolos snapshot
+  src: '{{ dolos_snapshot_url | string }}'
+  dest: '{{ dolos_db_dir }}'
+  remote_src: yes
+  creates: '{{ dolos_db_dir }}/ledger'
+  when: dolos_snapshot_enabled
+
 - name: Include docker-related tasks
   ansible.builtin.include_tasks: docker.yml
   when: dolos_install_method == 'docker'
