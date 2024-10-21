@@ -37,14 +37,10 @@
 
 - name: Create container
   docker_container:
-    name: '{{ cardano_node_docker_container_name }}'
-    image: '{{ cardano_node_docker_image }}'
     command:
       - run
-    restart_policy: unless-stopped
-    ports:
-      - '{{ cardano_node_port }}:{{ cardano_node_container_port }}'
-      - '{{ cardano_node_metrics_port }}:{{ cardano_node_metrics_container_port }}'
+    image: '{{ cardano_node_docker_image }}'
+    name: '{{ cardano_node_docker_container_name }}'
     env:
       CARDANO_BLOCK_PRODUCER: '{{ "true" if (cardano_node_block_producer | bool) else "false" }}'
       CARDANO_CONFIG: '{{ cardano_node_config_file }}'
@@ -60,4 +56,9 @@
       CARDANO_TOPOLOGY: '{{ cardano_node_topology_file }}'
       RESTORE_SNAPSHOT: '{{ "true" if (cardano_node_restore_snapshot | bool) else "false" }}'
       SNAPSHOT_DIGEST: '{{ cardano_node_snapshot_digest }}'
+    ports:
+      - '{{ cardano_node_port }}:{{ cardano_node_container_port }}'
+      - '{{ cardano_node_metrics_port }}:{{ cardano_node_metrics_container_port }}'
+    restart_policy: unless-stopped
+    stop_timeout: 300
     volumes: '{{ cardano_node_docker_volumes | list }}'
