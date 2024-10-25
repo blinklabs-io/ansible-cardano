@@ -23,16 +23,17 @@
 - name: Generate Dolos config
   template:
     dest: '{{ dolos_etc_container_dir }}/daemon.toml'
-    src: daemon.toml.j2
+    src: 'daemon.toml.j2'
     owner: '{{ cardano_node_user | string }}'
     group: '{{ cardano_node_group | string }}'
     mode: 0644
 
 - name: Unarchive Dolos snapshot
-  src: '{{ dolos_snapshot_url | string }}'
-  dest: '{{ dolos_db_dir }}'
-  remote_src: yes
-  creates: '{{ dolos_db_dir }}/ledger'
+  ansible.builtin.unarchive:
+    src: '{{ dolos_snapshot_url | string }}'
+    dest: '{{ dolos_db_dir }}'
+    remote_src: yes
+    creates: '{{ dolos_db_dir }}/ledger'
   when: dolos_snapshot_enabled
 
 - name: Include docker-related tasks
