@@ -18,7 +18,7 @@
   loop:
     - '{{ cardano_node_ipc_dir }}'
     - '{{ dolos_db_dir }}'
-    - '{{ cardano_node_config_dir }}/dolos'
+    - '{{ dolos_etc_dir }}'
 
 - name: Generate Dolos config
   template:
