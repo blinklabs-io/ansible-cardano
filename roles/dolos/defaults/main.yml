@@ -19,6 +19,7 @@ dolos_db_container_dir: '/data/db'
 cardano_node_config_dir: '{{ cardano_node_dir }}/config'
 dolos_cardano_node_config_container_dir: '/config'
 # Config directory for host/container (dolos)
+dolos_etc_dir: '{{ cardano_node_config_dir }}/dolos'
 dolos_etc_container_dir: '/etc/dolos'
 
 # IPC directory for host/container

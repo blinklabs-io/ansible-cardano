@@ -11,7 +11,7 @@
     dolos_docker_volumes: '{{ dolos_docker_volumes | default([]) + [item] }}'
   loop:
     - '{{ cardano_node_config_dir }}/{{ dolos_network}}:{{ dolos_cardano_node_config_container_dir }}'
-    - '{{ cardano_node_config_dir }}/dolos:{{ dolos_etc_container_dir }}'
+    - '{{ dolos_etc_dir }}:{{ dolos_etc_container_dir }}'
 
 - name: Create container
   docker_container:

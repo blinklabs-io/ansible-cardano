@@ -22,7 +22,7 @@
 
 - name: Generate Dolos config
   template:
-    dest: '{{ dolos_etc_container_dir }}/daemon.toml'
+    dest: '{{ dolos_etc_dir }}/daemon.toml'
     src: 'daemon.toml.j2'
     owner: '{{ cardano_node_user | string }}'
     group: '{{ cardano_node_group | string }}'
