@@ -3,7 +3,7 @@
 adder_install_method: 'docker'
 
 # Adder version
-adder_version: '0.23.4'
+adder_version: '0.25.0'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
