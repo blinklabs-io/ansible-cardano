@@ -3,7 +3,7 @@
 dolos_install_method: 'docker'
 
 # Dolos version
-dolos_version: '0.18.1'
+dolos_version: '0.18.2'
 
 # Cardano network
 dolos_network: mainnet
@@ -38,7 +38,7 @@ dolos_docker_container_name: dolos
 
 # Snapshots
 dolos_snapshot_enabled: true
-dolos_snapshot_url: https://dolos-snapshots.s3.amazonaws.com/v0/764824073/full/latest.tar.gz
+dolos_snapshot_url: https://dolos-snapshots.s3-accelerate.amazonaws.com/v0/764824073/full/latest.tar.gz
 
 # Port for host/container (relay)
 dolos_relay_container_port: 30013
