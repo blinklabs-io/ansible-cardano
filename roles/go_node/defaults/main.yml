@@ -3,7 +3,7 @@
 go_node_install_method: 'docker'
 
 # Cardano node version
-go_node_version: '0.1.1'
+go_node_version: '0.1.2'
 
 # Cardano network
 go_node_network: mainnet
