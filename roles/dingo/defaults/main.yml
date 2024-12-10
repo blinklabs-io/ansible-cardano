@@ -1,0 +1,85 @@
+---
+# Install method
+dingo_install_method: 'docker'
+
+# Cardano node version
+dingo_version: '0.1.6'
+
+# Cardano network
+dingo_network: mainnet
+
+# Base host directory for node data
+dingo_dir: /opt/cardano
+
+# Config directory for host/container
+dingo_config_dir: '{{ dingo_dir }}/config'
+dingo_config_container_dir: '{{ dingo_config_dir }}'
+
+# DB directory for host/container
+dingo_db_dir: '{{ dingo_dir }}/data'
+dingo_db_container_dir: '{{ dingo_db_dir }}'
+
+# IPC directory for host/container
+dingo_ipc_dir: '{{ dingo_dir }}/ipc'
+dingo_ipc_container_dir: '{{ dingo_ipc_dir }}'
+
+# Topology directory for host/container
+dingo_topology_dir: '{{ dingo_config_dir }}'
+dingo_topology_container_dir: '{{ dingo_topology_dir }}'
+
+# Block producer keys directory for host/container
+dingo_keys_dir: '{{ dingo_config_dir }}/keys'
+dingo_keys_container_dir: '{{ dingo_keys_dir }}'
+
+# User/group for file/directory ownership
+dingo_user: root
+dingo_group: root
+
+# Docker image
+dingo_docker_image: 'ghcr.io/blinklabs-io/dingo:{{ dingo_version }}'
+
+# Docker container name
+dingo_docker_container_name: node
+
+# Port for host/container
+dingo_container_port: 3001
+dingo_port: '{{ dingo_container_port }}'
+
+# Metrics port for host/container
+dingo_metrics_container_port: 12798
+dingo_metrics_port: '{{ dingo_metrics_container_port }}'
+
+# Socket file name
+dingo_socket_name: node.socket
+
+# Config
+dingo_manage_config: false # this currently controls mounting only
+dingo_config_file: '{{ dingo_config_container_dir }}/{{ dingo_network }}/config.json'
+
+# Topology
+dingo_manage_topology: false
+dingo_topology_file: '{{ dingo_topology_container_dir }}/{{ dingo_network }}/topology.json'
+dingo_topology_use_ledger_after_slot: 128908821
+dingo_topology_localroots: []
+dingo_topology_publicroots: []
+# Adjust for non-mainnet deployments
+dingo_topology_bootstrap_peers:
+  - address: 'backbone.cardano.iog.io'
+    port: 3001
+  - address: 'backbone.mainnet.emurgornd.com'
+    port: 3001
+  - address: 'backbone.mainnet.cardanofoundation.org'
+    port: 3001
+
+# Install chrony
+chrony_enabled: true
+
+# Mithril configuration
+dingo_restore_snapshot: true
+dingo_snapshot_digest: 'latest'
+
+# Block Producer (also controls mounts for keys)
+dingo_block_producer: false
+dingo_shelley_kes_key: '{{ dingo_keys_container_dir }}/kes.skey'
+dingo_shelley_opcert: '{{ dingo_keys_container_dir }}/node.cert'
+dingo_shelley_vrf_key: '{{ dingo_keys_container_dir }}/vrf.skey'

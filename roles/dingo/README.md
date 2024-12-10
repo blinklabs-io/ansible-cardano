@@ -1,4 +1,4 @@
-go_node
+dingo
 =========
 
 This role deploys a Blink Labs Go Cardano node instance.
@@ -36,7 +36,7 @@ passed in as parameters) is always nice for users too:
     - hosts: servers
       tasks:
         - include_role:
-            name: blinklabs.cardano.go_node
+            name: blinklabs.cardano.dingo
 ```
 
 License

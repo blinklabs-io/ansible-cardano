@@ -1,0 +1,50 @@
+---
+- name: Check install method
+  vars:
+    _allowed_install_methods: ['docker']
+  ansible.builtin.assert:
+    that:
+      - dingo_install_method in _allowed_install_methods
+    fail_msg: 'The specified install method ({{ dingo_install_method }}) is not one of the allowed values ({{ _allowed_install_methods | join(", ") }})'
+
+- name: Install chrony
+  package:
+    name: chrony
+    state: present
+  when: chrony_enabled
+
+- name: Create directories for persistent data
+  ansible.builtin.file:
+    state: directory
+    path: '{{ item }}'
+    owner: '{{ dingo_user | string }}'
+    group: '{{ dingo_group | string }}'
+    mode: '0755'
+  loop:
+    - '{{ dingo_db_dir }}'
+    - '{{ dingo_ipc_dir }}'
+
+- name: Create directories for topology
+  ansible.builtin.file:
+    state: directory
+    path: '{{ item }}'
+    owner: '{{ dingo_user | string }}'
+    group: '{{ dingo_group | string }}'
+    mode: '0755'
+  loop:
+    - '{{ dingo_topology_dir }}'
+  when: dingo_manage_topology
+
+- name: Generate custom topology config
+  template:
+    dest: '{{ dingo_topology_file }}'
+    src: custom-topology.json.j2
+    owner: '{{ dingo_user | string }}'
+    group: '{{ dingo_group | string }}'
+    mode: 0644
+  register: cardano_topology
+  when: dingo_manage_topology
+
+- name: Include docker-related tasks
+  ansible.builtin.include_tasks: docker.yml
+  when: dingo_install_method == 'docker'
