@@ -1,0 +1,54 @@
+---
+- name: Initialize dingo_docker_volumes fact
+  set_fact:
+    dingo_docker_volumes: '{{ dingo_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ dingo_ipc_dir }}:{{ dingo_ipc_container_dir }}'
+    - '{{ dingo_db_dir }}:{{ dingo_db_container_dir }}'
+
+- name: Add config to dingo_docker_volumes fact
+  set_fact:
+    dingo_docker_volumes: '{{ dingo_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ dingo_config_file }}:{{ dingo_config_file }}'
+  when: dingo_manage_config
+
+- name: Add topology to dingo_docker_volumes fact
+  set_fact:
+    dingo_docker_volumes: '{{ dingo_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ dingo_topology_file }}:{{ dingo_topology_file }}'
+  when: dingo_manage_topology
+
+- name: Add keys to dingo_docker_volumes fact
+  set_fact:
+    dingo_docker_volumes: '{{ dingo_docker_volumes | default([]) + [item] }}'
+  loop:
+    - '{{ dingo_keys_dir }}:{{ dingo_keys_container_dir }}'
+  when: dingo_block_producer | bool
+
+- name: Create container
+  docker_container:
+    name: '{{ dingo_docker_container_name }}'
+    image: '{{ dingo_docker_image }}'
+    command:
+      - --debug
+    restart_policy: unless-stopped
+    ports:
+      - '{{ dingo_port }}:{{ dingo_container_port }}'
+      - '{{ dingo_metrics_port }}:{{ dingo_metrics_container_port }}'
+    env:
+      CARDANO_BLOCK_PRODUCER: '{{ dingo_block_producer | string }}'
+      CARDANO_CONFIG: '{{ dingo_config_file }}'
+      CARDANO_DATABASE_PATH: '{{ dingo_db_container_dir }}'
+      CARDANO_NETWORK: '{{ dingo_network }}'
+      CARDANO_NODE_SOCKET_PATH: '{{ dingo_ipc_container_dir }}/{{ dingo_socket_name }}'
+      CARDANO_PORT: '{{ dingo_port | string }}'
+      CARDANO_SHELLEY_KES_KEY: '{{ dingo_shelley_kes_key }}'
+      CARDANO_SHELLEY_OPERATIONAL_CERTIFICATE: '{{ dingo_shelley_opcert }}'
+      CARDANO_SHELLEY_VRF_KEY: '{{ dingo_shelley_vrf_key }}'
+      CARDANO_SOCKET_PATH: '{{ dingo_ipc_container_dir }}/{{ dingo_socket_name }}'
+      CARDANO_TOPOLOGY: '{{ dingo_topology_file }}'
+      RESTORE_SNAPSHOT: '{{ dingo_restore_snapshot | string }}'
+      SNAPSHOT_DIGEST: '{{ dingo_snapshot_digest }}'
+    volumes: '{{ dingo_docker_volumes | list }}'
