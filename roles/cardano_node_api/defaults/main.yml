@@ -3,7 +3,7 @@
 cardano_node_api_install_method: 'docker'
 
 # Cardano Node API version
-cardano_node_api_version: '0.7.0'
+cardano_node_api_version: '0.8.0'
 
 # Cardano network
 cardano_node_api_network: mainnet
