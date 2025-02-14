@@ -39,7 +39,7 @@ dingo_group: root
 dingo_docker_image: 'ghcr.io/blinklabs-io/dingo:{{ dingo_version }}'
 
 # Docker container name
-dingo_docker_container_name: node
+dingo_docker_container_name: dingo
 
 # Port for host/container
 dingo_container_port: 3001
