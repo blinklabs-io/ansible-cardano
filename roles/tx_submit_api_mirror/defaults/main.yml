@@ -3,7 +3,7 @@
 tx_submit_api_mirror_install_method: 'docker'
 
 # Tx Submit API mirror version
-tx_submit_api_mirror_version: '0.8.0'
+tx_submit_api_mirror_version: '0.8.1'
 
 # Docker image
 tx_submit_api_mirror_docker_image: 'ghcr.io/blinklabs-io/tx-submit-api-mirror:{{ tx_submit_api_mirror_version }}'
