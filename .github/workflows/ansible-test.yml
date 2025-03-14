@@ -8,6 +8,8 @@ jobs:
   build:
     name: Ansible Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Perform sanity testing with ansible-test
         uses: ansible-community/ansible-test-gh-action@release/v1
