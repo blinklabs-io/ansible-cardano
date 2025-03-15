@@ -2,8 +2,8 @@
 # Install method
 dingo_install_method: 'docker'
 
-# Cardano node version
-dingo_version: '0.3.6'
+# Dingo version
+dingo_version: '0.4.0'
 
 # Cardano network
 dingo_network: mainnet
