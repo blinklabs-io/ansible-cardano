@@ -3,7 +3,7 @@
 ogmios_install_method: 'docker'
 
 # Ogmios version
-ogmios_version: '6.12.0'
+ogmios_version: '6.13.0'
 
 # Base host directory for node data
 cardano_node_dir: /opt/cardano
