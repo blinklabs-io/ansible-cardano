@@ -11,7 +11,7 @@
       DNS_LISTEN_PORT: '{{ cdnsd_container_port | string }}'
       STATE_DIR: '{{ cdnsd_db_container_dir }}'
     cdnsd_full_env: '{{ cdnsd_base_env | combine(cdnsd_extra_env) }}'
-  docker_container:
+  community.docker.docker_container:
     name: '{{ cdnsd_docker_container_name }}'
     image: '{{ cdnsd_docker_image }}'
     user: '{{ cdnsd_container_user }}'

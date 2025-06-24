@@ -13,7 +13,7 @@
     - '{{ cardano_node_config_dir }}:{{ kupo_config_container_dir }}'
 
 - name: Create container
-  docker_container:
+  community.docker.docker_container:
     name: '{{ kupo_docker_container_name }}'
     image: '{{ kupo_docker_image }}'
     restart_policy: unless-stopped

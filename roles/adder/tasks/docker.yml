@@ -6,7 +6,7 @@
     - '{{ cardano_node_ipc_dir }}:{{ adder_ipc_container_dir }}'
 
 - name: Create container
-  docker_container:
+  community.docker.docker_container:
     name: '{{ adder_docker_container_name }}'
     image: '{{ adder_docker_image }}'
     restart_policy: unless-stopped
