@@ -28,7 +28,7 @@
   when: dingo_block_producer | bool
 
 - name: Create container
-  docker_container:
+  community.docker.docker_container:
     name: '{{ dingo_docker_container_name }}'
     image: '{{ dingo_docker_image }}'
     command:

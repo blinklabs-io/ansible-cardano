@@ -14,7 +14,7 @@
   when: tx_submit_api_tls_cert_file_path != '' and tx_submit_api_tls_key_file_path != ''
 
 - name: Create container
-  docker_container:
+  community.docker.docker_container:
     name: '{{ tx_submit_api_docker_container_name }}'
     image: '{{ tx_submit_api_docker_image }}'
     restart_policy: unless-stopped

@@ -36,7 +36,7 @@
   when: cardano_node_block_producer | bool
 
 - name: Create container
-  docker_container:
+  community.docker.docker_container:
     command:
       - run
     image: '{{ cardano_node_docker_image }}'

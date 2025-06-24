@@ -14,7 +14,7 @@
   when: cardano_node_api_tls_cert_file_path != '' and cardano_node_api_tls_key_file_path != ''
 
 - name: Create container
-  docker_container:
+  community.docker.docker_container:
     name: '{{ cardano_node_api_docker_container_name }}'
     image: '{{ cardano_node_api_docker_image }}'
     restart_policy: unless-stopped
