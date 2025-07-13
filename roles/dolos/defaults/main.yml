@@ -3,7 +3,7 @@
 dolos_install_method: 'docker'
 
 # Dolos version
-dolos_version: '0.26.0'
+dolos_version: '0.26.1'
 
 # Cardano network
 dolos_network: mainnet
