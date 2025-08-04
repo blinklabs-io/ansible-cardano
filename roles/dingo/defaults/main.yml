@@ -3,7 +3,7 @@
 dingo_install_method: 'docker'
 
 # Dingo version
-dingo_version: '0.13.0'
+dingo_version: '0.14.0'
 
 # Cardano network
 dingo_network: mainnet
