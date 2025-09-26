@@ -31,8 +31,6 @@
   community.docker.docker_container:
     name: '{{ dingo_docker_container_name }}'
     image: '{{ dingo_docker_image }}'
-    command:
-      - --debug
     restart_policy: unless-stopped
     ports:
       - '{{ dingo_port }}:{{ dingo_container_port }}'
