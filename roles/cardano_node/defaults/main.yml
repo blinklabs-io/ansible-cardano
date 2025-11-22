@@ -3,7 +3,7 @@
 cardano_node_install_method: 'docker'
 
 # Cardano node version
-cardano_node_version: '10.5.1'
+cardano_node_version: '10.5.3'
 
 # Cardano network
 cardano_node_network: mainnet
