@@ -12,7 +12,7 @@ jobs:
       contents: read
     steps:
       - name: Perform sanity testing with ansible-test
-        uses: ansible-community/ansible-test-gh-action@d3a8ec7a59694e25e210fcd44738910149537f0e # v1.17.0 https://github.com/ansible-community/ansible-test-gh-action/releases/tag/v1.17.0
+        uses: ansible-community/ansible-test-gh-action@6ded727edb598e670ac056a8e680ca4050bac0a3 # v1.18.0 https://github.com/ansible-community/ansible-test-gh-action/releases/tag/v1.18.0
         with:
           ansible-core-version: stable-2.13
           testing-type: sanity
