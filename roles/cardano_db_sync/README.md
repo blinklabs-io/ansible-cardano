@@ -11,7 +11,34 @@ Any pre-requisites that may not be covered by Ansible itself or the role should 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+The role exposes the following variables:
+
+* `cardano_db_sync_install_method`: installation method; defaults to `docker`.
+* `cardano_db_sync_version`: Cardano DB Sync image version; defaults to
+  `13.6.0.5`.
+* `cardano_node_dir`: base directory for Cardano node data; defaults to
+  `/opt/cardano`.
+* `cardano_db_sync_state_dir`: host directory for DB Sync state; defaults to
+  `{{ cardano_node_dir }}/dbsync-state`.
+* `cardano_db_sync_state_container_dir`: container directory for DB Sync state;
+  defaults to `/var/lib/cexplorer`.
+* `cardano_node_ipc_dir`: host directory containing the node socket; defaults to
+  `{{ cardano_node_dir }}/ipc`.
+* `cardano_db_sync_ipc_container_dir`: container directory for the node socket;
+  defaults to `/node-ipc`.
+* `cardano_node_user`: owner for created files and directories; defaults to
+  `root`.
+* `cardano_node_group`: group for created files and directories; defaults to
+  `root`.
+* `cardano_db_sync_docker_image`: Docker image to run; defaults to
+  `ghcr.io/blinklabs-io/cardano-db-sync:{{ cardano_db_sync_version }}`.
+* `cardano_db_sync_docker_container_name`: Docker container name; defaults to
+  `cardano-db-sync`.
+* `cardano_db_sync_metrics_container_port`: metrics port inside the container;
+  defaults to `8080`.
+* `cardano_db_sync_metrics_port`: metrics port exposed on the host; defaults to
+  `{{ cardano_db_sync_metrics_container_port }}`.
+* `cardano_db_sync_network`: Cardano network name; defaults to `mainnet`.
 
 Dependencies
 ------------
