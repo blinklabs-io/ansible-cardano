@@ -13,6 +13,13 @@
     state: present
   when: chrony_enabled
 
+- name: Check topology input
+  ansible.builtin.assert:
+    that:
+      - dingo_topology is mapping
+    fail_msg: 'dingo_topology must be a mapping; use an empty mapping for legacy peer settings'
+  when: dingo_manage_topology
+
 - name: Create directories for persistent data
   ansible.builtin.file:
     state: directory
@@ -32,7 +39,7 @@
     group: '{{ dingo_group | string }}'
     mode: '0755'
   loop:
-    - '{{ dingo_topology_dir }}'
+    - '{{ dingo_topology_host_file | dirname }}'
   when: dingo_manage_topology
 
 - name: Generate custom topology config

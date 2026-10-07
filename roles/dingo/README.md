@@ -8,6 +8,7 @@ installs chrony when `chrony_enabled` is true.
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `dingo_version` | `0.20.0` | Image tag; architecture suffixes can be included. |
+| `dingo_network` | `mainnet` | Cardano network; selects the default network-config and topology paths. |
 | `dingo_docker_image` | `ghcr.io/blinklabs-io/dingo:{{ dingo_version }}` | Full image reference. |
 | `dingo_command` | `[]` | Container command as an argument list; empty uses the image default. |
 | `dingo_docker_extra_ports` | `[]` | Additional Docker port mappings, such as `6001:3002`. |
@@ -38,10 +39,13 @@ Configuration changes restart the container; unchanged configuration does not.
 
 Set `dingo_manage_topology: true` to generate a topology. The host destination
 is `dingo_topology_host_file`; `dingo_topology_file` is the read-only container
-path. Both default to the existing `dingo_topology_file` behavior.
+path. Both default to `{{ dingo_config_dir }}/{{ dingo_network }}/topology.json`,
+or `/opt/cardano/config/mainnet/topology.json` with the default directories and
+network.
 
-`dingo_topology` accepts a complete topology object, including grouped local
-roots, trust settings, valencies, and empty public roots. An empty mapping uses
+`dingo_topology` must be a mapping containing a complete topology object,
+including grouped local roots, trust settings, valencies, and empty public roots.
+An empty mapping uses
 the legacy `dingo_topology_bootstrap_peers`, `dingo_topology_localroots`,
 `dingo_topology_publicroots`, and `dingo_topology_use_ledger_after_slot` variables.
 A topology change restarts the container.
