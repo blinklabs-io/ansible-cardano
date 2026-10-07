@@ -14,7 +14,6 @@ Inside this collection are several roles.
 - `blinklabs.cardano.adder`
 - `blinklabs.cardano.cardano_db_sync`
 - `blinklabs.cardano.cardano_node`
-- `blinklabs.cardano.cardano_node_api`
 - `blinklabs.cardano.dingo`
 - `blinklabs.cardano.kupo`
 - `blinklabs.cardano.ogmios`
