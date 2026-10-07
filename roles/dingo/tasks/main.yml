@@ -8,7 +8,7 @@
     fail_msg: 'The specified install method ({{ dingo_install_method }}) is not one of the allowed values ({{ _allowed_install_methods | join(", ") }})'
 
 - name: Install chrony
-  package:
+  ansible.builtin.package:
     name: chrony
     state: present
   when: chrony_enabled
@@ -36,14 +36,33 @@
   when: dingo_manage_topology
 
 - name: Generate custom topology config
-  template:
-    dest: '{{ dingo_topology_file }}'
+  ansible.builtin.template:
+    dest: '{{ dingo_topology_host_file }}'
     src: custom-topology.json.j2
     owner: '{{ dingo_user | string }}'
     group: '{{ dingo_group | string }}'
-    mode: 0644
+    mode: '0644'
   register: cardano_topology
   when: dingo_manage_topology
+
+- name: Create Dingo configuration directory
+  ansible.builtin.file:
+    state: directory
+    path: '{{ dingo_node_config_file | dirname }}'
+    owner: '{{ dingo_user | string }}'
+    group: '{{ dingo_group | string }}'
+    mode: '0755'
+  when: dingo_manage_node_config | bool
+
+- name: Write Dingo configuration
+  ansible.builtin.copy:
+    content: '{{ dingo_node_config | to_nice_yaml }}'
+    dest: '{{ dingo_node_config_file }}'
+    owner: '{{ dingo_user | string }}'
+    group: '{{ dingo_group | string }}'
+    mode: '0644'
+  register: dingo_node_config_result
+  when: dingo_manage_node_config | bool
 
 - name: Include docker-related tasks
   ansible.builtin.include_tasks: docker.yml
