@@ -41,6 +41,12 @@ dingo_docker_image: 'ghcr.io/blinklabs-io/dingo:{{ dingo_version }}'
 # Docker container name
 dingo_docker_container_name: dingo
 
+# Leave empty to use the image's default command.
+dingo_command: []
+# Additional host:container port mappings and environment overrides.
+dingo_docker_extra_ports: []
+dingo_extra_env: {}
+
 # Port for host/container
 dingo_container_port: 3001
 dingo_port: '{{ dingo_container_port }}'
@@ -55,10 +61,20 @@ dingo_socket_name: node.socket
 # Config
 dingo_manage_config: false # this currently controls mounting only
 dingo_config_file: '{{ dingo_config_container_dir }}/{{ dingo_network }}/config.json'
+dingo_config_host_file: '{{ dingo_config_file }}'
+
+# Manage Dingo's YAML configuration separately from Cardano's network config.
+dingo_manage_node_config: false
+dingo_node_config_file: '{{ dingo_config_dir }}/dingo.yaml'
+dingo_node_config_container_file: /etc/dingo/dingo.yaml
+dingo_node_config: {}
 
 # Topology
 dingo_manage_topology: false
 dingo_topology_file: '{{ dingo_topology_container_dir }}/{{ dingo_network }}/topology.json'
+dingo_topology_host_file: '{{ dingo_topology_file }}'
+# An optional complete topology object overrides the legacy peer lists.
+dingo_topology: {}
 dingo_topology_use_ledger_after_slot: 128908821
 dingo_topology_localroots: []
 dingo_topology_publicroots: []

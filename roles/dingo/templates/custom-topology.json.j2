@@ -1,3 +1,6 @@
+{% if dingo_topology | length > 0 %}
+{{ dingo_topology | to_nice_json }}
+{% else %}
 {
 {% set peer_count = dingo_topology_bootstrap_peers | length %}
 {% if peer_count > 0 %}
@@ -54,3 +57,4 @@
   ],
   "useLedgerAfterSlot": {{ dingo_topology_use_ledger_after_slot }}
 }
+{% endif %}
