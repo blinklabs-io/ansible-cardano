@@ -96,6 +96,8 @@ dingo_snapshot_digest: 'latest'
 
 # Block Producer (also controls mounts for keys)
 dingo_block_producer: false
+# Set true only after approving this Dingo version for mainnet block production.
+dingo_allow_unverified_mainnet_block_producer: false
 dingo_shelley_kes_key: '{{ dingo_keys_container_dir }}/kes.skey'
 dingo_shelley_opcert: '{{ dingo_keys_container_dir }}/node.cert'
 dingo_shelley_vrf_key: '{{ dingo_keys_container_dir }}/vrf.skey'

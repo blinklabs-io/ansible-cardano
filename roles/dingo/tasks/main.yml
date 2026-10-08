@@ -7,6 +7,19 @@
       - dingo_install_method in _allowed_install_methods
     fail_msg: 'The specified install method ({{ dingo_install_method }}) is not one of the allowed values ({{ _allowed_install_methods | join(", ") }})'
 
+- name: Check mainnet block producer version approval
+  ansible.builtin.assert:
+    that:
+      - dingo_allow_unverified_mainnet_block_producer | bool
+    fail_msg: >-
+      Dingo {{ dingo_version }} is not approved for mainnet block production;
+      set dingo_allow_unverified_mainnet_block_producer=true only after
+      approving this version.
+  when:
+    - dingo_block_producer | bool
+    - dingo_network == 'mainnet'
+    - dingo_version == '0.80.0'
+
 - name: Install chrony
   ansible.builtin.package:
     name: chrony
