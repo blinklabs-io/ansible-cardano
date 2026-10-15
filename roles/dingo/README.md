@@ -7,7 +7,7 @@ installs chrony when `chrony_enabled` is true.
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `dingo_version` | `0.80.0` | Image tag; architecture suffixes can be included. |
+| `dingo_version` | `0.83.0` | Image tag; architecture suffixes can be included. |
 | `dingo_network` | `mainnet` | Cardano network; selects the default network-config and topology paths. |
 | `dingo_docker_image` | `ghcr.io/blinklabs-io/dingo:{{ dingo_version }}` | Full image reference. |
 | `dingo_command` | `[]` | Container command as an argument list; empty uses the image default. |
@@ -57,9 +57,10 @@ and operational-certificate directory. It is mounted read-only at
 `dingo_keys_container_dir`. The role supplies `dingo_shelley_kes_key`,
 `dingo_shelley_opcert`, and `dingo_shelley_vrf_key` as paths inside that mount;
 it does not generate or copy keys. Cold signing keys must stay outside the
-managed host. Dingo `0.80.0` requires explicit approval before it can run as a
-mainnet block producer; set `dingo_allow_unverified_mainnet_block_producer: true`
-only after approving that version for this role.
+managed host. Every Dingo version requires explicit approval before it can run
+as a mainnet block producer; set
+`dingo_allow_unverified_mainnet_block_producer: true` only after approving the
+configured version for this role.
 
 ## Example
 

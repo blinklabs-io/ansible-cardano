@@ -18,7 +18,6 @@
   when:
     - dingo_block_producer | bool
     - dingo_network == 'mainnet'
-    - dingo_version == '0.80.0'
 
 - name: Install chrony
   ansible.builtin.package:
