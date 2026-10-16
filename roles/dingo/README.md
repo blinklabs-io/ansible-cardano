@@ -7,7 +7,7 @@ installs chrony when `chrony_enabled` is true.
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `dingo_version` | `0.83.0` | Image tag; architecture suffixes can be included. |
+| `dingo_version` | `0.83.1` | Image tag; architecture suffixes can be included. |
 | `dingo_network` | `mainnet` | Cardano network; selects the default network-config and topology paths. |
 | `dingo_docker_image` | `ghcr.io/blinklabs-io/dingo:{{ dingo_version }}` | Full image reference. |
 | `dingo_command` | `[]` | Container command as an argument list; empty uses the image default. |
