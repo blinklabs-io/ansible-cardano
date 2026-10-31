@@ -1,8 +1,9 @@
 ---
 - name: Verify cardano_node invocation isolation
   hosts: localhost
-  gather_facts: false
+  gather_facts: true
   vars:
+    cardano_node_group: "{{ ansible_facts['user_gid'] }}"
     scenario_root: >-
       {{
         lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY')
@@ -14,7 +15,6 @@
         name: cardano_node
       vars:
         cardano_node_user: '{{ lookup("env", "USER") }}'
-        cardano_node_group: '{{ lookup("env", "USER") }}'
         cardano_node_dir: '{{ scenario_root }}/mainnet'
         cardano_node_docker_cli_script: '{{ scenario_root }}/mainnet/cardano-cli'
         cardano_node_docker_container_name: cardano-node-mainnet
@@ -33,7 +33,6 @@
         name: cardano_node
       vars:
         cardano_node_user: '{{ lookup("env", "USER") }}'
-        cardano_node_group: '{{ lookup("env", "USER") }}'
         cardano_node_network: preview
         cardano_node_dir: '{{ scenario_root }}/preview'
         cardano_node_docker_cli_script: '{{ scenario_root }}/preview/cardano-cli'
