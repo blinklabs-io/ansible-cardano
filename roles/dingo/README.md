@@ -7,7 +7,7 @@ installs chrony when `chrony_enabled` is true.
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `dingo_version` | `0.90.0` | Image tag; architecture suffixes can be included. |
+| `dingo_version` | `0.90.1` | Image tag; architecture suffixes can be included. |
 | `dingo_network` | `mainnet` | Cardano network; selects the default network-config and topology paths. |
 | `dingo_docker_image` | `ghcr.io/blinklabs-io/dingo:{{ dingo_version }}` | Full image reference. |
 | `dingo_command` | `[]` | Container command as an argument list; empty uses the image default. |
@@ -68,7 +68,7 @@ configured version for this role.
 - hosts: servers
   roles:
     - role: blinklabs.cardano.dingo
-      dingo_version: '0.90.0'
+      dingo_version: '0.90.1'
       dingo_network: preview
       dingo_port: 6000
       dingo_container_port: 3001
