@@ -13,7 +13,6 @@
       ansible.builtin.include_role:
         name: cardano_node
       vars:
-        chrony_enabled: false
         cardano_node_user: '{{ lookup("env", "USER") }}'
         cardano_node_group: '{{ lookup("env", "USER") }}'
         cardano_node_dir: '{{ scenario_root }}/mainnet'
@@ -33,7 +32,6 @@
       ansible.builtin.include_role:
         name: cardano_node
       vars:
-        chrony_enabled: false
         cardano_node_user: '{{ lookup("env", "USER") }}'
         cardano_node_group: '{{ lookup("env", "USER") }}'
         cardano_node_network: preview

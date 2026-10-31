@@ -3,3 +3,4 @@ all:
   hosts:
     localhost:
       ansible_connection: local
+      chrony_enabled: false

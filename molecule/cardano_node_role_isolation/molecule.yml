@@ -13,7 +13,7 @@ provisioner:
       roles_path: '${MOLECULE_PROJECT_DIRECTORY}/roles'
   inventory:
     links:
-      hosts: inventory.yml
+      hosts: inventory
 scenario:
   test_sequence:
     - converge
