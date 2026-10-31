@@ -1,0 +1,20 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: default
+platforms:
+  - name: localhost
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      collections_path: '${MOLECULE_SCENARIO_DIRECTORY}/collections'
+      roles_path: '${MOLECULE_PROJECT_DIRECTORY}/roles'
+  inventory:
+    links:
+      hosts: inventory.yml
+scenario:
+  test_sequence:
+    - converge
+    - idempotence
