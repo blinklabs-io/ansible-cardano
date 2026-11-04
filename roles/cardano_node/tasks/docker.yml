@@ -8,32 +8,20 @@
     mode: '0755'
 
 - name: Initialize cardano_node_docker_volumes fact
-  set_fact:
-    cardano_node_docker_volumes: '{{ cardano_node_docker_volumes | default([]) + [item] }}'
-  loop:
-    - '{{ cardano_node_ipc_dir }}:{{ cardano_node_ipc_container_dir }}'
-    - '{{ cardano_node_db_dir }}:{{ cardano_node_db_container_dir }}'
-
-- name: Add config to cardano_node_docker_volumes fact
-  set_fact:
-    cardano_node_docker_volumes: '{{ cardano_node_docker_volumes | default([]) + [item] }}'
-  loop:
-    - '{{ cardano_node_config_file }}:{{ cardano_node_config_file }}'
-  when: cardano_node_manage_config
-
-- name: Add topology to cardano_node_docker_volumes fact
-  set_fact:
-    cardano_node_docker_volumes: '{{ cardano_node_docker_volumes | default([]) + [item] }}'
-  loop:
-    - '{{ cardano_node_topology_file }}:{{ cardano_node_topology_file }}'
-  when: cardano_node_manage_topology
-
-- name: Add keys to cardano_node_docker_volumes fact
-  set_fact:
-    cardano_node_docker_volumes: '{{ cardano_node_docker_volumes | default([]) + [item] }}'
-  loop:
-    - '{{ cardano_node_keys_dir }}:{{ cardano_node_keys_container_dir }}'
-  when: cardano_node_block_producer | bool
+  ansible.builtin.set_fact:
+    cardano_node_docker_volumes: >-
+      {{
+        [
+          cardano_node_ipc_dir ~ ':' ~ cardano_node_ipc_container_dir,
+          cardano_node_db_dir ~ ':' ~ cardano_node_db_container_dir
+        ]
+        + ([cardano_node_config_file ~ ':' ~ cardano_node_config_file]
+          if cardano_node_manage_config else [])
+        + ([cardano_node_topology_file ~ ':' ~ cardano_node_topology_file]
+          if cardano_node_manage_topology else [])
+        + ([cardano_node_keys_dir ~ ':' ~ cardano_node_keys_container_dir]
+          if (cardano_node_block_producer | bool) else [])
+      }}
 
 - name: Create container
   community.docker.docker_container:

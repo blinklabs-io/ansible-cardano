@@ -1,0 +1,62 @@
+---
+- name: Verify cardano_node invocation isolation
+  hosts: localhost
+  gather_facts: true
+  vars:
+    cardano_node_group: "{{ ansible_facts['user_gid'] }}"
+    scenario_root: >-
+      {{
+        lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY')
+        | default('/tmp/ansible-cardano-node-role-isolation', true)
+      }}
+  tasks:
+    - name: Include mainnet cardano_node instance
+      ansible.builtin.include_role:
+        name: cardano_node
+      vars:
+        cardano_node_user: '{{ lookup("env", "USER") }}'
+        cardano_node_dir: '{{ scenario_root }}/mainnet'
+        cardano_node_docker_cli_script: '{{ scenario_root }}/mainnet/cardano-cli'
+        cardano_node_docker_container_name: cardano-node-mainnet
+        cardano_node_config_file: '{{ scenario_root }}/mainnet/config/config.json'
+        cardano_node_topology_file: '{{ scenario_root }}/mainnet/config/topology.json'
+        cardano_node_manage_config: true
+        cardano_node_manage_topology: true
+        cardano_node_block_producer: true
+
+    - name: Capture mainnet volumes
+      ansible.builtin.set_fact:
+        mainnet_volumes: '{{ cardano_node_docker_volumes }}'
+
+    - name: Include preview cardano_node instance
+      ansible.builtin.include_role:
+        name: cardano_node
+      vars:
+        cardano_node_user: '{{ lookup("env", "USER") }}'
+        cardano_node_network: preview
+        cardano_node_dir: '{{ scenario_root }}/preview'
+        cardano_node_docker_cli_script: '{{ scenario_root }}/preview/cardano-cli'
+        cardano_node_docker_container_name: cardano-node-preview
+        cardano_node_config_file: '{{ scenario_root }}/preview/config/config.json'
+        cardano_node_topology_file: '{{ scenario_root }}/preview/config/topology.json'
+        cardano_node_manage_config: true
+        cardano_node_manage_topology: true
+        cardano_node_block_producer: false
+
+    - name: Verify each instance has only its own volumes
+      ansible.builtin.assert:
+        that:
+          - mainnet_volumes == expected_mainnet_volumes
+          - cardano_node_docker_volumes == expected_preview_volumes
+      vars:
+        expected_mainnet_volumes:
+          - '{{ scenario_root }}/mainnet/ipc:{{ scenario_root }}/mainnet/ipc'
+          - '{{ scenario_root }}/mainnet/data:{{ scenario_root }}/mainnet/data'
+          - '{{ scenario_root }}/mainnet/config/config.json:{{ scenario_root }}/mainnet/config/config.json'
+          - '{{ scenario_root }}/mainnet/config/topology.json:{{ scenario_root }}/mainnet/config/topology.json'
+          - '{{ scenario_root }}/mainnet/config/keys:{{ scenario_root }}/mainnet/config/keys'
+        expected_preview_volumes:
+          - '{{ scenario_root }}/preview/ipc:{{ scenario_root }}/preview/ipc'
+          - '{{ scenario_root }}/preview/data:{{ scenario_root }}/preview/data'
+          - '{{ scenario_root }}/preview/config/config.json:{{ scenario_root }}/preview/config/config.json'
+          - '{{ scenario_root }}/preview/config/topology.json:{{ scenario_root }}/preview/config/topology.json'
